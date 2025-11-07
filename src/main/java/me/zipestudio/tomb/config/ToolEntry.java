@@ -20,7 +20,7 @@ public class ToolEntry {
     private float offsetZ;
 
     public ToolEntry() {
-        this("minecraft:diamond_sword", "BACK", false, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f);
+        this("minecraft:diamond_sword", "BACK", false, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f);
     }
 
     public Identifier getId() {

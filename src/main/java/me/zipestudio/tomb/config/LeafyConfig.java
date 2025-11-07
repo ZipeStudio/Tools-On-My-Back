@@ -26,8 +26,8 @@ public class LeafyConfig {
 			Codec.STRING.fieldOf("itemId").forGetter(ToolEntry::getItemId),
 			Codec.STRING.fieldOf("group").forGetter(ToolEntry::getGroup),
 			Codec.BOOL.fieldOf("is3DModel").forGetter(ToolEntry::is3DModel),
-			Codec.FLOAT.fieldOf("angle").forGetter(ToolEntry::getAngle),
 			Codec.FLOAT.fieldOf("scale").orElse(1f).forGetter(ToolEntry::getScale),
+			Codec.FLOAT.fieldOf("angle").forGetter(ToolEntry::getAngle),
 			Codec.FLOAT.fieldOf("offsetX").orElse(0f).forGetter(ToolEntry::getOffsetX),
 			Codec.FLOAT.fieldOf("offsetY").orElse(0f).forGetter(ToolEntry::getOffsetY),
 			Codec.FLOAT.fieldOf("offsetZ").orElse(0f).forGetter(ToolEntry::getOffsetZ)

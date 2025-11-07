@@ -64,12 +64,59 @@
 ![settings](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/settings.png?raw=true)
 
 ### Right/Left Hand Support
-![right_hand](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/right_hand.png?raw=true)
+![right_hand](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/hand_swap.png?raw=true)
 
-![left_hand](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/left_hand.png?raw=true)
+> Right Hand
+> ![right_hand](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/right_hand.png?raw=true)
+>
+> Left Hand
+> ![left_hand](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/left_hand.png?raw=true)
 
-### Simple config file
-...
+### Simple Configuration File
+The configuration file can be found at:</br>
+`/config/tools-on-my-back.json5`
+
+```
+{
+  "enableMod": true,
+  "renderWithCape": true,
+  "renderWithElytra": true,
+  "tools": [
+    {
+      "itemId": "minecraft:diamond_sword",
+      "group": "BACK",
+      "is3DModel": false,
+      "scale": 1,
+      "angle": 0,
+      "offsetX": 0.0,
+      "offsetY": 0.0,
+      "offsetZ": 0
+    },
+    {
+      "itemId": "farmersdelight:skillet",
+      "group": "BACK",
+      "is3DModel": true,
+      "scale": 1.2,
+      "angle": 157.5,
+      "offsetX": 0.0,
+      "offsetY": 0.0,
+      "offsetZ": -0.040625
+    },
+    {
+    ...
+    }
+  ]
+}
+```
+
+| Parameter                           | Description                                                                                                                                                                          |
+|-------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **itemId**                          | The full item ID (e.g. `minecraft:diamond_sword` or `my_mod:my_item`).<br/>!["id_settings"](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/id_settings.png?raw=true) |
+| **group**                           | Currently only `"BACK"` — doesn’t affect behavior yet.                                                                                                                               |
+| **is3DModel**                       | Set to `true` for 3D item models (like a shield).                                                                                                                                    |
+| **scale**                           | Controls the overall size of the displayed item.                                                                                                                                     |
+| **angle**                           | Rotation angle of the item (in degrees).                                                                                                                                             |
+| **offsetX<br/>offsetY<br/>offsetZ** | Adjusts item position relative to the player’s back.                                                                                                                                 |
 
 !["Support" Title](https://github.com/ZipeStudio/Vault/blob/main/design/mods/main/ZSsupport.png?raw=true)
 
