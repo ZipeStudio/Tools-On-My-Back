@@ -39,18 +39,18 @@
 **Tools On My Back** — A client-side mod that visually displays the last used tool on the player's back. Adds immersion and style to your adventures, giving you the look of a seasoned traveler.
 
 ### Showcase
-![showcase](https://github.com/ZipeStudio/Tools-On-My-Back/refs/heads/master/img/showcase.gif?raw=true)
+![showcase](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/showcase.gif?raw=true)
 
 !["Compatible" Title](https://github.com/ZipeStudio/Vault/blob/main/design/mods/main/ZScompatible.png?raw=true)
 
 ## Multiplayer friendly
-![multiplayer_showcase](https://github.com/ZipeStudio/Tools-On-My-Back/refs/heads/master/img/multiplayer_showcase.gif?raw=true)
+![multiplayer_showcase](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/multiplayer_showcase.gif?raw=true)
 
 ### With mods
-![mods_showcase](https://github.com/ZipeStudio/Tools-On-My-Back/refs/heads/master/img/mods_showcase.gif?raw=true)
+![mods_showcase](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/mods_showcase.gif?raw=true)
 
 ### With CustomModels (Resource Pack's)
-![rp_showcase](https://github.com/ZipeStudio/Tools-On-My-Back/refs/heads/master/img/rp_showcase.gif?raw=true)
+![rp_showcase](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/rp_showcase.gif?raw=true)
 
 !["Configurable" Title](https://github.com/ZipeStudio/Vault/blob/main/design/mods/main/ZSconfigurable.png?raw=true)
 
