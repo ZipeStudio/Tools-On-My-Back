@@ -41,7 +41,7 @@
 ### Showcase
 ![showcase](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/showcase.gif?raw=true)
 
-!["Compatible" Title](https://github.com/ZipeStudio/Vault/blob/main/design/mods/main/ZScompatible.png?raw=true)
+!["Compatibility" Title](https://github.com/ZipeStudio/Vault/blob/main/design/mods/main/ZScompatible.png?raw=true)
 
 ### Mod Compatibility
 - Works seamlessly with other popular mods.
