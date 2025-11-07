@@ -43,7 +43,7 @@
 
 !["Compatible" Title](https://github.com/ZipeStudio/Vault/blob/main/design/mods/main/ZScompatible.png?raw=true)
 
-## Multiplayer friendly
+### Multiplayer friendly
 ![multiplayer_showcase](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/multiplayer_showcase.gif?raw=true)
 
 ### With mods
