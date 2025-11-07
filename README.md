@@ -43,17 +43,32 @@
 
 !["Compatible" Title](https://github.com/ZipeStudio/Vault/blob/main/design/mods/main/ZScompatible.png?raw=true)
 
-### Multiplayer friendly
-![multiplayer_showcase](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/multiplayer_showcase.gif?raw=true)
+### Mod Compatibility
+- Works seamlessly with other popular mods.
 
-### With mods
 ![mods_showcase](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/mods_showcase.gif?raw=true)
 
-### With CustomModels (Resource Pack's)
+### Multiplayer Friendly
+- Fully client-side — visible only to you.
+
+![multiplayer_showcase](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/multiplayer_showcase.gif?raw=true)
+
+### Custom Models (Resource Packs)
+- Supports resource packs with custom tools.
+
 ![rp_showcase](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/rp_showcase.gif?raw=true)
 
 !["Configurable" Title](https://github.com/ZipeStudio/Vault/blob/main/design/mods/main/ZSconfigurable.png?raw=true)
 
+### Settings
+![settings](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/settings.png?raw=true)
+
+### Right/Left Hand Support
+![right_hand](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/right_hand.png?raw=true)
+
+![left_hand](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/left_hand.png?raw=true)
+
+### Simple config file
 ...
 
 !["Support" Title](https://github.com/ZipeStudio/Vault/blob/main/design/mods/main/ZSsupport.png?raw=true)

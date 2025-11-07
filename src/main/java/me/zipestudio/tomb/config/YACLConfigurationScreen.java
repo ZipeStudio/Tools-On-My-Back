@@ -41,32 +41,26 @@ public class YACLConfigurationScreen {
 
 	private static ConfigCategory getGeneralCategory(LeafyConfig defConfig, LeafyConfig config) {
 		return SimpleCategory.startBuilder("general")
-				.groups(getMainGroup(defConfig, config))
+				.options(
+						SimpleOption.<Boolean>startBuilder("enableMod")
+								.withBinding(defConfig.isEnableMod(), config::isEnableMod, config::setEnableMod, false)
+								.withController(ENABLED_OR_DISABLED_FORMATTER)
+								.withDescription(SimpleContent.NONE)
+								.build(),
+
+						SimpleOption.<Boolean>startBuilder("renderWithCape")
+								.withBinding(defConfig.isRenderWithCape(), config::isRenderWithCape, config::setRenderWithCape, false)
+								.withController(ENABLED_OR_DISABLED_FORMATTER)
+								.withDescription(SimpleContent.NONE)
+								.build(),
+
+						SimpleOption.<Boolean>startBuilder("renderWithElytra")
+								.withBinding(defConfig.isRenderWithElytra(), config::isRenderWithElytra, config::setRenderWithElytra, false)
+								.withController(ENABLED_OR_DISABLED_FORMATTER)
+								.withDescription(SimpleContent.NONE)
+								.build()
+				)
 				.build();
-	}
-
-	private static OptionGroup getMainGroup(LeafyConfig defConfig, LeafyConfig config) {
-		return SimpleGroup.startBuilder("general").options(
-
-				SimpleOption.<Boolean>startBuilder("enableMod")
-						.withBinding(defConfig.isEnableMod(), config::isEnableMod, config::setEnableMod, false)
-						.withController(ENABLED_OR_DISABLED_FORMATTER)
-						.withDescription(SimpleContent.NONE)
-						.build(),
-
-				SimpleOption.<Boolean>startBuilder("renderWithCape")
-						.withBinding(defConfig.isRenderWithCape(), config::isRenderWithCape, config::setRenderWithCape, false)
-						.withController(ENABLED_OR_DISABLED_FORMATTER)
-						.withDescription(SimpleContent.NONE)
-						.build(),
-
-				SimpleOption.<Boolean>startBuilder("renderWithElytra")
-						.withBinding(defConfig.isRenderWithElytra(), config::isRenderWithElytra, config::setRenderWithElytra, false)
-						.withController(ENABLED_OR_DISABLED_FORMATTER)
-						.withDescription(SimpleContent.NONE)
-						.build()
-
-		).build();
 	}
 
 	private static ConfigCategory getToolsCategory(LeafyConfig defConfig, LeafyConfig config) {

@@ -12,7 +12,6 @@
 	"${mod_id}.modmenu.option.renderWithElytra.name": "Отображать предмет под элитрами",
 	"${mod_id}.modmenu.option.renderWithElytra.description": "Если включено, предмет будет отображаться под элитрами игрока.",
 
-
 	"${mod_id}.modmenu.category.general.name": "§lОсновное",
 
 	"${mod_id}.modmenu.formatter.enabled_or_disabled.true": "Включено",
