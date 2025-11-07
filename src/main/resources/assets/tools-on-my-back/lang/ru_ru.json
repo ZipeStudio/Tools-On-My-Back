@@ -1,0 +1,20 @@
+{
+	"modmenu.descriptionTranslation.${mod_id}": "Клиентский мод, который отображает последний использованный инструмент на спине игрока. Добавляет атмосферности и стиля вашим приключениям, придавая образ опытного путешественника.",
+	"${mod_id}.modmenu.title": "§l Конфигурация ${mod_name}",
+	"${mod_id}.modmenu.no_config_library_screen.message": "Вам необходимо установить §6§lYet Another Config Lib [YACL]§f, чтобы открыть экран конфигурации ${mod_name} \n\n§a§lОткрыть страницу §6§lYACL §a§lна Modrinth?",
+
+	"${mod_id}.modmenu.option.enableMod.name": "Включить мод",
+	"${mod_id}.modmenu.option.enableMod.description": "Включает или отключает все функции мода.",
+
+	"${mod_id}.modmenu.option.renderWithCape.name": "Отображать предмет под плащом",
+	"${mod_id}.modmenu.option.renderWithCape.description": "Если включено, предмет будет отображаться под плащом игрока.",
+
+	"${mod_id}.modmenu.option.renderWithElytra.name": "Отображать предмет под элитрами",
+	"${mod_id}.modmenu.option.renderWithElytra.description": "Если включено, предмет будет отображаться под элитрами игрока.",
+
+
+	"${mod_id}.modmenu.category.general.name": "§lОсновное",
+
+	"${mod_id}.modmenu.formatter.enabled_or_disabled.true": "Включено",
+	"${mod_id}.modmenu.formatter.enabled_or_disabled.false": "Отключено"
+}

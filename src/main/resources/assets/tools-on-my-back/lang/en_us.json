@@ -1,0 +1,20 @@
+{
+	"modmenu.descriptionTranslation.${mod_id}": "${mod_description}",
+	"${mod_id}.modmenu.title": "§l${mod_name} Configuration",
+	"${mod_id}.modmenu.no_config_library_screen.message": "You need to install §6§lYet Another Config Lib [YACL]§f to open ${mod_name} Configuration Screen\n\n§a§lOpen §6§lYACL §a§lModrinth page?",
+
+	"${mod_id}.modmenu.option.enableMod.name": "Enable Mod",
+	"${mod_id}.modmenu.option.enableMod.description": "Turns all mod features on or off.",
+
+	"${mod_id}.modmenu.option.renderWithCape.name": "Render tool under cape",
+	"${mod_id}.modmenu.option.renderWithCape.description": "If enabled, tools will render under the player's cape.",
+
+	"${mod_id}.modmenu.option.renderWithElytra.name": "Render tool under elytra",
+	"${mod_id}.modmenu.option.renderWithElytra.description": "If enabled, tools will render under the player's elytra.",
+
+
+	"${mod_id}.modmenu.category.general.name": "§lGeneral",
+
+	"${mod_id}.modmenu.formatter.enabled_or_disabled.true": "Enabled",
+	"${mod_id}.modmenu.formatter.enabled_or_disabled.false": "Disabled"
+}
