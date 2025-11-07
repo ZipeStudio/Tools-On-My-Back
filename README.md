@@ -60,24 +60,34 @@
 
 !["Configurable" Title](https://github.com/ZipeStudio/Vault/blob/main/design/mods/main/ZSconfigurable.png?raw=true)
 
-### Settings
-![settings](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/settings.png?raw=true)
-
 ### Right/Left Hand Support
-![right_hand](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/hand_swap.png?raw=true)
-
+> ![right_hand](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/hand_swap.png?raw=true)
+> <details><summary>Hands Showcase</summary>
+>
 > Right Hand
 > ![right_hand](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/right_hand.png?raw=true)
 >
 > Left Hand
 > ![left_hand](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/left_hand.png?raw=true)
+> </details>
+
+<br>
+
+### Settings
+> ![settings](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/settings.png?raw=true)
+> <details><summary>⚙️ Note:</summary>
+> Most basic settings (like enabling the mod or rendering with a cape/elytra) can be configured in-game via the YACL menu.</br>
+> However, adding or modifying items in the tools list currently requires manual editing of the .json5 config file (see below).</br>
+> Full YACL support for tool configuration is still in development.
+> </details>
+
+<br>
 
 ### Simple Configuration File
 The configuration file can be found at:</br>
 `/config/tools-on-my-back.json5`
 
-```
-{
+<pre style="border-left:3px solid #4CAF50; padding:10px;"><code>{
   "enableMod": true,
   "renderWithCape": true,
   "renderWithElytra": true,
@@ -103,11 +113,11 @@ The configuration file can be found at:</br>
       "offsetZ": -0.040625
     },
     {
-    ...
+    // YOUR ITEMS
     }
   ]
 }
-```
+</code></pre>
 
 | Parameter                           | Description                                                                                                                                                                          |
 |-------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -117,6 +127,7 @@ The configuration file can be found at:</br>
 | **scale**                           | Controls the overall size of the displayed item.                                                                                                                                     |
 | **angle**                           | Rotation angle of the item (in degrees).                                                                                                                                             |
 | **offsetX<br/>offsetY<br/>offsetZ** | Adjusts item position relative to the player’s back.                                                                                                                                 |
+
 
 !["Support" Title](https://github.com/ZipeStudio/Vault/blob/main/design/mods/main/ZSsupport.png?raw=true)
 
