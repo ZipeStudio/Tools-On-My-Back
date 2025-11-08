@@ -56,7 +56,7 @@
 ![multiplayer_showcase](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/multiplayer_showcase.gif?raw=true)
 
 ### Custom Models (Resource Packs)
-- Supports resource packs with custom tools.
+- Supports resource packs with custom models.
 
 ![rp_showcase](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/rp_showcase.gif?raw=true)
 
