@@ -26,17 +26,17 @@ import net.minecraft.item.*;
 import net.minecraft.util.Arm;
 import net.minecraft.util.math.RotationAxis;
 
-public class BackToolFeatureRenderer /*? >=1.21.4 {*/ /*<M extends PlayerEntityModel> extends PlayerHeldItemFeatureRenderer<PlayerEntityRenderState, M> *//*?} else {*/ extends HeldItemFeatureRenderer<PlayerEntityRenderState, PlayerEntityModel> /*?}*/ {
+public class BackToolFeatureRenderer /*? >=1.21.4 {*/ <M extends PlayerEntityModel> extends PlayerHeldItemFeatureRenderer<PlayerEntityRenderState, M> /*?} else {*/ /*extends HeldItemFeatureRenderer<PlayerEntityRenderState, PlayerEntityModel> *//*?}*/ {
 
     //? if >=1.21.4 {
-    /*public BackToolFeatureRenderer(FeatureRendererContext<PlayerEntityRenderState, M> context) {
+    public BackToolFeatureRenderer(FeatureRendererContext<PlayerEntityRenderState, M> context) {
         super(context);
     }
-    *///?} else if >=1.21.2 {
-    public BackToolFeatureRenderer(FeatureRendererContext<PlayerEntityRenderState, PlayerEntityModel> context, ItemRenderer itemRenderer) {
+    //?} else if >=1.21.2 {
+    /*public BackToolFeatureRenderer(FeatureRendererContext<PlayerEntityRenderState, PlayerEntityModel> context, ItemRenderer itemRenderer) {
         super(context, itemRenderer);
     }
-    //?}
+    *///?}
 
     //? if >=1.21.9 {
     /*@Override
@@ -93,10 +93,10 @@ public class BackToolFeatureRenderer /*? >=1.21.4 {*/ /*<M extends PlayerEntityM
         matrices.push();
 
         //? if >=1.21.5 {
-        /*this.getContextModel().body.applyTransform(matrices);
-         *///?} else {
-        this.getContextModel().body.rotate(matrices);
-        //?}
+        this.getContextModel().body.applyTransform(matrices);
+         //?} else {
+        /*this.getContextModel().body.rotate(matrices);
+        *///?}
 
         float chestOffset = !playerState.equippedChestStack.isEmpty()
                 ? 1.2F
@@ -154,16 +154,16 @@ public class BackToolFeatureRenderer /*? >=1.21.4 {*/ /*<M extends PlayerEntityM
                 light
         );
         *///?} else >=1.21.5 {
-        /*MinecraftClient.getInstance().getItemRenderer().renderItem(
+        MinecraftClient.getInstance().getItemRenderer().renderItem(
                 stack, ItemDisplayContext.FIXED, light, OverlayTexture.DEFAULT_UV,
                 matrices, provider, null, 0
         );
-        *///?} else {
-        MinecraftClient.getInstance().getItemRenderer().renderItem(
+        //?} else {
+        /*MinecraftClient.getInstance().getItemRenderer().renderItem(
                 stack, ModelTransformationMode.FIXED, light, OverlayTexture.DEFAULT_UV,
                 matrices, provider, null, 0
         );
-        //?}
+        *///?}
 
         matrices.pop();
     }

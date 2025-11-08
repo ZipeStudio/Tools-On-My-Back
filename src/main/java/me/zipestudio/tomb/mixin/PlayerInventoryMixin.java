@@ -20,11 +20,11 @@ public abstract class PlayerInventoryMixin {
     public PlayerEntity player;
 
     //? if >=1.21.5 {
-    /*@Shadow
+    @Shadow
     public abstract ItemStack getSelectedStack();
-    *///?} else {
-    @Shadow public abstract ItemStack getMainHandStack();
-    //?}
+    //?} else {
+    /*@Shadow public abstract ItemStack getMainHandStack();
+    *///?}
 
     @Inject(at = @At("HEAD"), method = "dropSelectedItem")
     public void onSelected(boolean entireStack, CallbackInfoReturnable<ItemStack> cir) {
@@ -40,10 +40,10 @@ public abstract class PlayerInventoryMixin {
 
         ItemStack selectedItem =
         //? if >=1.21.5 {
-        /*this.getSelectedStack();
-        *///?} else {
-        this.getMainHandStack();
-        //?}
+        this.getSelectedStack();
+        //?} else {
+        /*this.getMainHandStack();
+        *///?}
 
         if (selectedItem.isEmpty()) return;
 
