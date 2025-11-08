@@ -38,8 +38,6 @@
 
 ![banner](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/tomb_banner_optimize.gif?raw=true)
 
-![test_banner](https://raw.githubusercontent.com/ZipeStudio/Tools-On-My-Back/refs/heads/master/img/tomb_banner.gif)
-
 **Tools On My Back** — A client-side mod that visually displays the last used tool on the player's back. Adds immersion and style to your adventures, giving you the look of a seasoned traveler.
 
 ### Showcase
