@@ -73,63 +73,63 @@
 > ![left_hand](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/left_hand.png?raw=true)
 > </details>
 
-<br>
+<br/>
 
 ### Settings
 > ![settings](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/settings.png?raw=true)
-> <details><summary>⚙️ Note:</summary>
-> Most basic settings (like enabling the mod or rendering with a cape/elytra) can be configured in-game via the YACL menu.</br>
-> However, adding or modifying items in the tools list currently requires manual editing of the .json5 config file (see below).</br>
-> Full YACL support for tool configuration is still in development.
-> </details>
 
-<br>
+<br/>
 
 ### Simple Configuration File
 The configuration file can be found at:</br>
 `/config/tools-on-my-back.json5`
 
-<pre style="border-left:3px solid #4CAF50; padding:10px;"><code>{
-  "enableMod": true,
-  "renderWithCape": true,
-  "renderWithElytra": true,
-  "tools": [
-    {
-      "itemId": "minecraft:diamond_sword",
-      "group": "BACK",
-      "is3DModel": false,
-      "scale": 1,
-      "angle": 0,
-      "offsetX": 0.0,
-      "offsetY": 0.0,
-      "offsetZ": 0
-    },
-    {
-      "itemId": "farmersdelight:skillet",
-      "group": "BACK",
-      "is3DModel": true,
-      "scale": 1.2,
-      "angle": 157.5,
-      "offsetX": 0.0,
-      "offsetY": 0.0,
-      "offsetZ": -0.040625
-    },
-    {
-    // YOUR ITEMS
-    }
-  ]
-}
-</code></pre>
-
-| Parameter                           | Description                                                                                                                                                                          |
-|-------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **itemId**                          | The full item ID (e.g. `minecraft:diamond_sword` or `my_mod:my_item`).<br/>!["id_settings"](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/id_settings.png?raw=true) |
-| **group**                           | Currently only `"BACK"` — doesn’t affect behavior yet.                                                                                                                               |
-| **is3DModel**                       | Set to `true` for 3D item models (like a shield).                                                                                                                                    |
-| **scale**                           | Controls the overall size of the displayed item.                                                                                                                                     |
-| **angle**                           | Rotation angle of the item (in degrees).                                                                                                                                             |
-| **offsetX<br/>offsetY<br/>offsetZ** | Adjusts item position relative to the player’s back.                                                                                                                                 |
-
+> <pre style="border-left:3px solid #4CAF50; padding:10px;"><code>{
+>  "enableMod": true,
+>  "renderWithCape": true,
+>  "renderWithElytra": true,
+>  "tools": [
+>    {
+>      "itemId": "minecraft:diamond_sword",
+>      "group": "BACK",
+>      "is3DModel": false,
+>      "scale": 1,
+>      "angle": 0,
+>      "offsetX": 0.0,
+>      "offsetY": 0.0,
+>      "offsetZ": 0
+>    },
+>    {
+>      "itemId": "farmersdelight:skillet",
+>      "group": "BACK",
+>      "is3DModel": true,
+>      "scale": 1.2,
+>      "angle": 157.5,
+>      "offsetX": 0.0,
+>      "offsetY": 0.0,
+>      "offsetZ": -0.040625
+>    },
+>    {
+>    // YOUR ITEMS
+>    }
+>  ]
+>}
+> </code></pre>
+> <details><summary>⚙️ Note:</summary>
+>
+> Most basic settings (like enabling the mod or rendering with a cape/elytra) can be configured in-game via the YACL menu.</br>
+> However, adding or modifying items in the tools list currently requires manual editing of the .json5 config file (see below).</br>
+> Full YACL support for tool configuration is still in development.
+> 
+> | Parameter                           | Description                                                                                                                                                                          |
+> |-------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+> | **itemId**                          | The full item ID (e.g. `minecraft:diamond_sword` or `my_mod:my_item`).<br/>!["id_settings"](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/id_settings.png?raw=true) |
+> | **group**                           | Currently only `"BACK"` — doesn’t affect behavior yet.                                                                                                                               |
+> | **is3DModel**                       | Set to `true` for 3D item models (like a shield).                                                                                                                                    |
+> | **scale**                           | Controls the overall size of the displayed item.                                                                                                                                     |
+> | **angle**                           | Rotation angle of the item (in degrees).                                                                                                                                             |
+> | **offsetX<br/>offsetY<br/>offsetZ** | Adjusts item position relative to the player’s back.                                                                                                                                 |
+</details>
 
 !["Support" Title](https://github.com/ZipeStudio/Vault/blob/main/design/mods/main/ZSsupport.png?raw=true)
 
