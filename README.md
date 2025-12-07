@@ -90,6 +90,7 @@ The configuration file can be found at:</br>
 >  "renderWithElytra": true,
 >  "tools": [
 >    {
+>      "enabled": false,
 >      "itemId": "minecraft:diamond_sword",
 >      "group": "BACK",
 >      "is3DModel": false,
@@ -100,6 +101,7 @@ The configuration file can be found at:</br>
 >      "offsetZ": 0
 >    },
 >    {
+>      "enabled": true,
 >      "itemId": "farmersdelight:skillet",
 >      "group": "BACK",
 >      "is3DModel": true,
