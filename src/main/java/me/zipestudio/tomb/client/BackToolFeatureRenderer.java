@@ -1,13 +1,16 @@
 package me.zipestudio.tomb.client;
 
 //? if >=1.21.9 {
+
 /*import net.fabricmc.fabric.impl.client.indigo.renderer.render.ItemRenderContext;
+import net.minecraft.client.data.ItemModels;
 import net.minecraft.client.item.ItemModelManager;
 import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.item.ItemRenderState;
 *///?}
 
 import me.zipestudio.tomb.config.ConfigHandler;
+import me.zipestudio.tomb.config.LeafyConfig;
 import me.zipestudio.tomb.utils.interfaces.PlayerRenderStateWithParent;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -20,13 +23,16 @@ import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.render.entity.state.PlayerEntityRenderState;
 import net.minecraft.client.render.item.HeldItemRenderer;
 import net.minecraft.client.render.item.ItemRenderer;
+import net.minecraft.client.render.model.ModelBaker;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.component.ComponentType;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.util.Arm;
 import net.minecraft.util.math.RotationAxis;
 
-public class BackToolFeatureRenderer /*? >=1.21.4 {*/ <M extends PlayerEntityModel> extends PlayerHeldItemFeatureRenderer<PlayerEntityRenderState, M> /*?} else {*/ /*extends HeldItemFeatureRenderer<PlayerEntityRenderState, PlayerEntityModel> *//*?}*/ {
+public class BackToolFeatureRenderer /*? >=1.21.4 {*/<M extends PlayerEntityModel> extends PlayerHeldItemFeatureRenderer<PlayerEntityRenderState, M> /*?} else {*/ /*extends HeldItemFeatureRenderer<PlayerEntityRenderState, PlayerEntityModel> *//*?}*/ {
 
     //? if >=1.21.4 {
     public BackToolFeatureRenderer(FeatureRendererContext<PlayerEntityRenderState, M> context) {
@@ -94,9 +100,9 @@ public class BackToolFeatureRenderer /*? >=1.21.4 {*/ <M extends PlayerEntityMod
 
         //? if >=1.21.5 {
         this.getContextModel().body.applyTransform(matrices);
-         //?} else {
+        //?} else {
         /*this.getContextModel().body.rotate(matrices);
-        *///?}
+         *///?}
 
         float chestOffset = !playerState.equippedChestStack.isEmpty()
                 ? 1.2F
@@ -110,7 +116,7 @@ public class BackToolFeatureRenderer /*? >=1.21.4 {*/ <M extends PlayerEntityMod
     //? >=1.21.9 {
     /*private void renderStack(PlayerEntityRenderState state, MatrixStack matrices, OrderedRenderCommandQueue commandQueue, int light,
                              Arm mainArm, ItemStack stack, float chestOffset) {
-    *///?} else {
+        *///?} else {
     private void renderStack(MatrixStack matrices, VertexConsumerProvider provider, int light,
                              Arm mainArm, ItemStack stack, float chestOffset) {
         //?}
@@ -154,15 +160,17 @@ public class BackToolFeatureRenderer /*? >=1.21.4 {*/ <M extends PlayerEntityMod
                 light
         );
         *///?} else >=1.21.5 {
-        MinecraftClient.getInstance().getItemRenderer().renderItem(
-                stack, ItemDisplayContext.FIXED, light, OverlayTexture.DEFAULT_UV,
-                matrices, provider, null, 0
-        );
+        
+            MinecraftClient.getInstance().getItemRenderer().renderItem(
+                    stack, ItemDisplayContext.FIXED, light, OverlayTexture.DEFAULT_UV,
+                    matrices, provider, null, 0
+            );
         //?} else {
-        /*MinecraftClient.getInstance().getItemRenderer().renderItem(
-                stack, ModelTransformationMode.FIXED, light, OverlayTexture.DEFAULT_UV,
-                matrices, provider, null, 0
-        );
+        
+            /*MinecraftClient.getInstance().getItemRenderer().renderItem(
+                    stack, ModelTransformationMode.FIXED, light, OverlayTexture.DEFAULT_UV,
+                    matrices, provider, null, 0
+            );
         *///?}
 
         matrices.pop();

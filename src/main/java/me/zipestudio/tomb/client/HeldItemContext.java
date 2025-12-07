@@ -35,7 +35,7 @@ public class HeldItemContext {
             previousMain = ItemStack.EMPTY;
         }
 
-        if (!ConfigHandler.areStacksEqual(main, activeMain) && ConfigHandler.isItemEnabled(activeMain.getItem())) {
+        if (!ConfigHandler.areStacksEqual(main, activeMain) && ConfigHandler.isCurrentItem(activeMain.getItem())) {
             previousMain = activeMain;
         }
 

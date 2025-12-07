@@ -11,13 +11,16 @@ import java.util.Optional;
 
 public class ConfigHandler {
 
-    private static final LeafyConfig leafyConfig = TOMBClient.getLeafyConfig();
+    private static final LeafyConfig leafyConfig = LeafyConfig.getInstance();
 
-    public static boolean isItemEnabled(Item item) {
+    public static boolean isCurrentItem(Item item) {
 
         if (!leafyConfig.isEnableMod()) return false;
 
-        if (getToolEntry(item).isPresent()) return true;
+        Optional<ToolEntry> entry = getToolEntry(item);
+        if (entry.isPresent()) {
+            return entry.get().isEnabled();
+        }
 
         ItemStack stack = item.getDefaultStack();
 
@@ -43,6 +46,12 @@ public class ConfigHandler {
         return stack.get(DataComponentTypes.TOOL) != null;
     }
 
+    public static boolean isItemEnabled(Item item) {
+        return getToolEntry(item)
+                .map(ToolEntry::isEnabled)
+                .orElse(true);
+    }
+
     public static Optional<ToolEntry> getToolEntry(Item item) {
         return leafyConfig.getTools().stream()
                 .filter(e -> e.getId().equals(Registries.ITEM.getId(item)))
@@ -54,6 +63,7 @@ public class ConfigHandler {
                 .map(ToolEntry::getScale)
                 .orElseGet(() -> {
                     if (item instanceof ShieldItem) return 1.5f;
+                    if (item instanceof ShearsItem) return 0.85f;
                     if (isItemEqualsId(item, "farmersdelight:skillet")) return 1.2F;
                     return 1.0f;
                 });
@@ -83,20 +93,21 @@ public class ConfigHandler {
                 });
     }
 
-    public static String getToolGroup(Item item) {
-        return getToolEntry(item)
-                .map(ToolEntry::getGroup)
-                .orElse("BACK");
-    }
-
     public static float[] getToolOffset(Item item) {
         return getToolEntry(item)
                 .map(entry -> new float[]{entry.getOffsetX(), entry.getOffsetY(), entry.getOffsetZ()})
                 .orElseGet(() -> {
+                    if (item instanceof ShearsItem) return new float[]{0, 0.1F, 0};
                     if (item instanceof ShieldItem) return new float[]{0, 0, -0.94F / 16F};
                     if (isItemEqualsId(item, "farmersdelight:skillet")) return new float[]{0, 0, -0.65F / 16F};
                     return new float[]{0f, 0f, 0f};
                 });
+    }
+
+    public static String getToolGroup(Item item) {
+        return getToolEntry(item)
+                .map(ToolEntry::getGroup)
+                .orElse("BACK");
     }
 
     private static Identifier getIdentifierFromItem(Item item) {

@@ -15,9 +15,6 @@ import java.util.WeakHashMap;
 public class TOMBClient implements ClientModInitializer {
 
 	@Getter
-	private static final LeafyConfig leafyConfig = LeafyConfig.getInstance();
-
-	@Getter
 	public static final Map<UUID, HeldItemContext> HELD_TOOLS = new WeakHashMap<>();
 
 	public static Logger LOGGER = LoggerFactory.getLogger(TOMBServer.MOD_NAME + "/Client");

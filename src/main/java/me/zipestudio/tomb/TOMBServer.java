@@ -13,7 +13,7 @@ public class TOMBServer implements ModInitializer {
 
     public static final String MOD_NAME = /*$ mod_name*/ "Tools On My Back";
     public static final String MOD_ID = /*$ mod_id*/ "tools-on-my-back";
-    public static final String YACL_DEPEND_VERSION = /*$ yacl*/ "3.7.1+1.21.6-fabric";
+    public static final String YACL_DEPEND_VERSION = /*$ yacl*/ "3.8.0+1.21.5-fabric";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
 
     public static Identifier id(String path) {

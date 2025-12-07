@@ -23,11 +23,12 @@ import static me.zipestudio.tomb.utils.CodecUtils.option;
 public class LeafyConfig {
 
 	public static final Codec<ToolEntry> TOOL_ENTRY_CODEC = RecordCodecBuilder.create(instance -> instance.group(
+			Codec.BOOL.fieldOf("enabled").orElse(true).forGetter(ToolEntry::isEnabled),
 			Codec.STRING.fieldOf("itemId").forGetter(ToolEntry::getItemId),
-			Codec.STRING.fieldOf("group").forGetter(ToolEntry::getGroup),
-			Codec.BOOL.fieldOf("is3DModel").forGetter(ToolEntry::is3DModel),
+			Codec.STRING.fieldOf("group").orElse("BACK").forGetter(ToolEntry::getGroup),
+			Codec.BOOL.fieldOf("is3DModel").orElse(false).forGetter(ToolEntry::is3DModel),
 			Codec.FLOAT.fieldOf("scale").orElse(1f).forGetter(ToolEntry::getScale),
-			Codec.FLOAT.fieldOf("angle").forGetter(ToolEntry::getAngle),
+			Codec.FLOAT.fieldOf("angle").orElse(0f).forGetter(ToolEntry::getAngle),
 			Codec.FLOAT.fieldOf("offsetX").orElse(0f).forGetter(ToolEntry::getOffsetX),
 			Codec.FLOAT.fieldOf("offsetY").orElse(0f).forGetter(ToolEntry::getOffsetY),
 			Codec.FLOAT.fieldOf("offsetZ").orElse(0f).forGetter(ToolEntry::getOffsetZ)

@@ -10,6 +10,7 @@ import net.minecraft.util.Identifier;
 @AllArgsConstructor
 public class ToolEntry {
 
+    private boolean enabled = true;
     private String itemId;
     private String group;
     private boolean is3DModel;
@@ -20,7 +21,7 @@ public class ToolEntry {
     private float offsetZ;
 
     public ToolEntry() {
-        this("minecraft:diamond_sword", "BACK", false, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+        this(true, "minecraft:diamond_sword", "BACK", false, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f);
     }
 
     public Identifier getId() {
