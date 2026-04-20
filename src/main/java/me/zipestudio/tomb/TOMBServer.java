@@ -9,7 +9,7 @@ public class TOMBServer {
 
 	public static final String MOD_NAME = /*$ mod_name*/ "Tools On My Back";
 	public static final String MOD_ID = /*$ mod_id*/ "tools_on_my_back";
-	public static final String YACL_DEPEND_VERSION = /*$ yacl*/ "3.8.2+1.21.4-fabric";
+	public static final String YACL_DEPEND_VERSION = /*$ yacl*/ "3.8.0+1.21.3-fabric";
 
 	public static Logger LOGGER = LoggerFactory.getLogger(TOMBServer.MOD_NAME);
 

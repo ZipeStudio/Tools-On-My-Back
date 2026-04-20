@@ -1,9 +1,8 @@
 package me.zipestudio.tomb.client;
 
 //? if >=1.21.11 {
-
 /*import net.minecraft.client.model.player.PlayerModel;
-        *///?} else {
+*///?} else {
 import net.minecraft.client.model.PlayerModel;
  //?}
 
@@ -18,8 +17,8 @@ import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 //?}
 
 //? if >=1.21.4 {
-import net.minecraft.client.renderer.item.ItemStackRenderState;
-//?}
+/*import net.minecraft.client.renderer.item.ItemStackRenderState;
+*///?}
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -28,6 +27,7 @@ import net.minecraft.client.Minecraft;
 import me.zipestudio.tomb.config.ConfigHandler;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.PlayerItemInHandLayer;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
@@ -46,14 +46,14 @@ public class BackToolFeatureRenderer /*? >=1.21.9 {*//*<M extends PlayerModel> e
         super(context);
     }
     *///?} else if >=1.21.4 {
-    public BackToolFeatureRenderer(RenderLayerParent<PlayerRenderState, M> context) {
+    /*public BackToolFeatureRenderer(RenderLayerParent<PlayerRenderState, M> context) {
         super(context);
     }
-    //?} else {
-    /*public BackToolFeatureRenderer(RenderLayerParent<PlayerRenderState, M> context) {
+    *///?} else {
+    public BackToolFeatureRenderer(RenderLayerParent<PlayerRenderState, M> context) {
         super(context, Minecraft.getInstance().getItemRenderer());
     }
-    *///?}
+    //?}
 
     //? if >=1.21.11 {
     /*@Override
@@ -130,7 +130,7 @@ public class BackToolFeatureRenderer /*? >=1.21.9 {*//*<M extends PlayerModel> e
         poseStack.popPose();
     }
     *///?} else if >=1.21.4 {
-    @Override
+    /*@Override
     public void renderArmWithItem(PlayerRenderState playerRenderState, ItemStackRenderState itemStackRenderState, HumanoidArm humanoidArm, PoseStack poseStack, MultiBufferSource multiBufferSource, int i) {
 
         Player playerEntity = ((PlayerRenderStateWithParent) playerRenderState).tomb$getEntity();
@@ -159,8 +159,8 @@ public class BackToolFeatureRenderer /*? >=1.21.9 {*//*<M extends PlayerModel> e
         renderStack(playerRenderState, poseStack, multiBufferSource, i, playerRenderState.mainArm, stack, chestOffset);
         poseStack.popPose();
     }
-    //?} else {
-    /*@Override
+    *///?} else {
+    @Override
     public void renderArmWithItem(PlayerRenderState playerRenderState, @Nullable BakedModel bakedModel, ItemStack itemStack, ItemDisplayContext itemDisplayContext, HumanoidArm humanoidArm, PoseStack poseStack, MultiBufferSource multiBufferSource, int i) {
 
         Player playerEntity = ((PlayerRenderStateWithParent) playerRenderState).tomb$getEntity();
@@ -189,7 +189,7 @@ public class BackToolFeatureRenderer /*? >=1.21.9 {*//*<M extends PlayerModel> e
         renderStack(playerRenderState, poseStack, multiBufferSource, i, playerRenderState.mainArm, stack, chestOffset);
         poseStack.popPose();
     }
-    *///?}
+    //?}
 
     //? if >=1.21.9 {
     /*private void renderStack(AvatarRenderState state, PoseStack matrices, SubmitNodeCollector commandQueue,
@@ -270,18 +270,18 @@ public class BackToolFeatureRenderer /*? >=1.21.9 {*//*<M extends PlayerModel> e
         return player.chestEquipment.getItem() == Items.ELYTRA;
     }
     *///?} else if >=1.21.4 {
-    private boolean shouldSkipRendering(PlayerRenderState player) {
+    /*private boolean shouldSkipRendering(PlayerRenderState player) {
         if (!ConfigHandler.isModEnabled()) return true;
         if (ConfigHandler.shouldRenderWithElytra()) return false;
         return player.chestEquipment.getItem() == Items.ELYTRA;
     }
-    //?} else {
-    /*private boolean shouldSkipRendering(PlayerRenderState player) {
+    *///?} else {
+    private boolean shouldSkipRendering(PlayerRenderState player) {
         if (!ConfigHandler.isModEnabled()) return true;
         if (ConfigHandler.shouldRenderWithElytra()) return false;
         return player.chestItem.getItem() == Items.ELYTRA;
     }
-    *///?}
+    //?}
 
 
 }
