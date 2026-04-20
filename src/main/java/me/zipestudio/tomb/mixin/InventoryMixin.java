@@ -19,10 +19,10 @@ public abstract class InventoryMixin {
     public Player player;
 
     //? if >=1.21.5 {
-    @Shadow public abstract ItemStack getSelectedItem();
-    //?} else {
-    /*@Shadow public abstract ItemStack getSelected();
-    *///?}
+    /*@Shadow public abstract ItemStack getSelectedItem();
+    *///?} else {
+    @Shadow public abstract ItemStack getSelected();
+    //?}
 
     @Inject(at = @At("HEAD"), method = "removeFromSelected")
     public void onSelected(boolean entireStack, CallbackInfoReturnable<ItemStack> cir) {
@@ -32,10 +32,10 @@ public abstract class InventoryMixin {
         if (!isClient) return;
 
         //? if >=1.21.5 {
-        ItemStack selectedItem = this.getSelectedItem();
-        //?} else {
-        /*ItemStack selectedItem = this.getSelected();
-        *///?}
+        /*ItemStack selectedItem = this.getSelectedItem();
+        *///?} else {
+        ItemStack selectedItem = this.getSelected();
+        //?}
 
         if (selectedItem.isEmpty()) return;
 

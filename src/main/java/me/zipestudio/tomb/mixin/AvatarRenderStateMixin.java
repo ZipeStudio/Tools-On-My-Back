@@ -8,12 +8,12 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
 //? if >=1.21.9 {
-import net.minecraft.client.renderer.entity.state.AvatarRenderState;
+/*import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 @Mixin(AvatarRenderState.class)
-//?} else {
-/*import net.minecraft.client.renderer.entity.state.PlayerRenderState;
+*///?} else {
+import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 @Mixin(PlayerRenderState.class)
-*///?}
+//?}
 
 public class AvatarRenderStateMixin implements PlayerRenderStateWithParent {
 

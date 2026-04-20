@@ -3,7 +3,7 @@ package me.zipestudio.tomb.utils;
 import me.zipestudio.tomb.TOMBServer;
 import me.zipestudio.tomb.utils.yacl.utils.SimpleContent;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.Function;
 
@@ -29,7 +29,7 @@ public class ModMenuUtils {
 		return TOMBServer.text(key + ".description");
 	}
 
-	public static Identifier getContentId(SimpleContent content, String contentId) {
+	public static ResourceLocation getContentId(SimpleContent content, String contentId) {
 		return TOMBServer.id(String.format("textures/config/%s.%s", contentId, content.getFileExtension()));
 	}
 

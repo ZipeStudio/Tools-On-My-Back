@@ -3,7 +3,7 @@ package me.zipestudio.tomb.config;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 
 @Getter
@@ -26,8 +26,8 @@ public class ToolEntry {
         this(true, "minecraft:diamond_sword", "BACK", false, "FIXED", 1.0f, 0.0f, 0.0f, 0.0f, 0.0f);
     }
 
-    public Identifier getId() {
-        return Identifier.parse(itemId);
+    public ResourceLocation getId() {
+        return ResourceLocation.parse(itemId);
     }
 
 }
