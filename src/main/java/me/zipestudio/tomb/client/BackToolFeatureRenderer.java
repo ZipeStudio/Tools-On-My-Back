@@ -1,23 +1,27 @@
 package me.zipestudio.tomb.client;
 
 //? if >=1.21.11 {
-/*import net.minecraft.client.model.player.PlayerModel;
-*///?} else {
-import net.minecraft.client.model.PlayerModel;
- //?}
+import me.zipestudio.tomb.config.ConfigHandler;
+import me.zipestudio.tomb.utils.interfaces.PlayerRenderStateWithParent;
+import net.minecraft.client.model.player.PlayerModel;
+//?} else {
+/*import net.minecraft.client.model.PlayerModel;
+ *///?}
 
 //? if >=1.21.9 {
-/*import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
-*///?} else {
-import net.minecraft.client.renderer.RenderType;
+//?} else {
+/*import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.client.renderer.entity.state.PlayerRenderState;
-//?}
+*///?}
 
 //? if >=1.21.4 {
-/*import net.minecraft.client.renderer.item.ItemStackRenderState;
+import net.minecraft.client.renderer.item.ItemStackRenderState;
+//?} else {
+/*import net.minecraft.client.resources.model.BakedModel;
 *///?}
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -27,7 +31,6 @@ import net.minecraft.client.Minecraft;
 import me.zipestudio.tomb.config.ConfigHandler;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.PlayerItemInHandLayer;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
@@ -39,24 +42,24 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.Nullable;
 
-public class BackToolFeatureRenderer /*? >=1.21.9 {*//*<M extends PlayerModel> extends PlayerItemInHandLayer<AvatarRenderState, M> *//*?} else {*/ <M extends PlayerModel> extends PlayerItemInHandLayer<PlayerRenderState, M> /*?}*/ {
+public class BackToolFeatureRenderer /*? >=1.21.9 {*/<M extends PlayerModel> extends PlayerItemInHandLayer<AvatarRenderState, M> /*?} else {*/ /*<M extends PlayerModel> extends PlayerItemInHandLayer<PlayerRenderState, M> *//*?}*/ {
 
     //? if >=1.21.9 {
-    /*public BackToolFeatureRenderer(RenderLayerParent<AvatarRenderState, M> context) {
+    public BackToolFeatureRenderer(RenderLayerParent<AvatarRenderState, M> context) {
         super(context);
     }
-    *///?} else if >=1.21.4 {
+    //?} else if >=1.21.4 {
     /*public BackToolFeatureRenderer(RenderLayerParent<PlayerRenderState, M> context) {
         super(context);
     }
     *///?} else {
-    public BackToolFeatureRenderer(RenderLayerParent<PlayerRenderState, M> context) {
+    /*public BackToolFeatureRenderer(RenderLayerParent<PlayerRenderState, M> context) {
         super(context, Minecraft.getInstance().getItemRenderer());
     }
-    //?}
+    *///?}
 
     //? if >=1.21.11 {
-    /*@Override
+    @Override
     protected void submitArmWithItem(
             AvatarRenderState state,
             ItemStackRenderState itemState,
@@ -92,7 +95,7 @@ public class BackToolFeatureRenderer /*? >=1.21.9 {*//*<M extends PlayerModel> e
         renderStack(state, poseStack, collector, light, state.mainArm, stack, chestOffset);
         poseStack.popPose();
     }
-    *///?} else if >=1.21.9 {
+    //?} else if >=1.21.9 {
     /*@Override
     protected void submitArmWithItem(
             AvatarRenderState state,
@@ -160,7 +163,7 @@ public class BackToolFeatureRenderer /*? >=1.21.9 {*//*<M extends PlayerModel> e
         poseStack.popPose();
     }
     *///?} else {
-    @Override
+    /*@Override
     public void renderArmWithItem(PlayerRenderState playerRenderState, @Nullable BakedModel bakedModel, ItemStack itemStack, ItemDisplayContext itemDisplayContext, HumanoidArm humanoidArm, PoseStack poseStack, MultiBufferSource multiBufferSource, int i) {
 
         Player playerEntity = ((PlayerRenderStateWithParent) playerRenderState).tomb$getEntity();
@@ -189,15 +192,15 @@ public class BackToolFeatureRenderer /*? >=1.21.9 {*//*<M extends PlayerModel> e
         renderStack(playerRenderState, poseStack, multiBufferSource, i, playerRenderState.mainArm, stack, chestOffset);
         poseStack.popPose();
     }
-    //?}
+    *///?}
 
     //? if >=1.21.9 {
-    /*private void renderStack(AvatarRenderState state, PoseStack matrices, SubmitNodeCollector commandQueue,
+    private void renderStack(AvatarRenderState state, PoseStack matrices, SubmitNodeCollector commandQueue,
                              int light, HumanoidArm mainArm, ItemStack stack, float chestOffset) {
-        *///?} else {
-    private void renderStack(PlayerRenderState state, PoseStack matrices, MultiBufferSource commandQueue,
+        //?} else {
+    /*private void renderStack(PlayerRenderState state, PoseStack matrices, MultiBufferSource commandQueue,
                              int light, HumanoidArm mainArm, ItemStack stack, float chestOffset) {
-    //?}
+    *///?}
 
         matrices.pushPose();
 
@@ -229,15 +232,15 @@ public class BackToolFeatureRenderer /*? >=1.21.9 {*//*<M extends PlayerModel> e
         }
 
         //? if >=1.21.11 {
-        /*if (item.getDefaultInstance().is(ItemTags.SPEARS)) {
+        if (item.getDefaultInstance().is(ItemTags.SPEARS)) {
             float yaw = (mainArm == net.minecraft.world.entity.HumanoidArm.LEFT) ? -90 : 90;
             matrices.mulPose(Axis.YP.rotationDegrees(yaw));
             matrices.mulPose(Axis.ZP.rotationDegrees((mainArm == net.minecraft.world.entity.HumanoidArm.LEFT) ? 1.6F : -1.6F));
         }
-        *///?}
+        //?}
 
         //? if >=1.21.5 {
-        /*Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer().renderItem(
+        Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer().renderItem(
                 ((PlayerRenderStateWithParent) state).tomb$getEntity(),
                 stack,
                 ConfigHandler.getDisplayContext(item),
@@ -245,9 +248,9 @@ public class BackToolFeatureRenderer /*? >=1.21.9 {*//*<M extends PlayerModel> e
                 commandQueue,
                 light
         );
-        *///?} else {
+        //?} else {
 
-        //TODO: idk why this shit doesn't work on NeoForge <1.21.5
+        /*//TODO: idk why this shit doesn't work on NeoForge <1.21.5
 
         Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer().renderItem(
                 ((PlayerRenderStateWithParent) state).tomb$getEntity(),
@@ -258,30 +261,30 @@ public class BackToolFeatureRenderer /*? >=1.21.9 {*//*<M extends PlayerModel> e
                 commandQueue,
                 light
         );
-        //?}
+        *///?}
 
         matrices.popPose();
     }
 
     //? if >=1.21.9 {
-    /*private boolean shouldSkipRendering(AvatarRenderState player) {
+    private boolean shouldSkipRendering(AvatarRenderState player) {
         if (!ConfigHandler.isModEnabled()) return true;
         if (ConfigHandler.shouldRenderWithElytra()) return false;
         return player.chestEquipment.getItem() == Items.ELYTRA;
     }
-    *///?} else if >=1.21.4 {
+    //?} else if >=1.21.4 {
     /*private boolean shouldSkipRendering(PlayerRenderState player) {
         if (!ConfigHandler.isModEnabled()) return true;
         if (ConfigHandler.shouldRenderWithElytra()) return false;
         return player.chestEquipment.getItem() == Items.ELYTRA;
     }
     *///?} else {
-    private boolean shouldSkipRendering(PlayerRenderState player) {
+    /*private boolean shouldSkipRendering(PlayerRenderState player) {
         if (!ConfigHandler.isModEnabled()) return true;
         if (ConfigHandler.shouldRenderWithElytra()) return false;
         return player.chestItem.getItem() == Items.ELYTRA;
     }
-    //?}
+    *///?}
 
 
 }

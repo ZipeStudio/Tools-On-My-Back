@@ -2,7 +2,7 @@ package me.zipestudio.tomb.config;
 
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.*;
 
@@ -35,10 +35,10 @@ public class ConfigHandler {
         }
 
         //? if >=1.21.11 {
-        /*if (stack.is(ItemTags.SPEARS)) {
+        if (stack.is(ItemTags.SPEARS)) {
             return true;
         }
-        *///?}
+        //?}
 
         if (item instanceof MaceItem ||
                 item instanceof ShieldItem ||
@@ -82,9 +82,9 @@ public class ConfigHandler {
                     if (item instanceof TridentItem) return ItemDisplayContext.THIRD_PERSON_RIGHT_HAND;
 
                     //? if >=1.21.11 {
-                    /*if (item.getDefaultInstance().is(ItemTags.SPEARS))
+                    if (item.getDefaultInstance().is(ItemTags.SPEARS))
                         return ItemDisplayContext.THIRD_PERSON_RIGHT_HAND;
-                    *///?}
+                    //?}
 
                     return ItemDisplayContext.FIXED;
                 });
@@ -98,8 +98,8 @@ public class ConfigHandler {
                     if (isItemEqualsId(item, "farmersdelight:skillet")) return true;
 
                     //? if >=1.21.11 {
-                    /*if (item.getDefaultInstance().is(ItemTags.SPEARS)) return true;
-                    *///?}
+                    if (item.getDefaultInstance().is(ItemTags.SPEARS)) return true;
+                    //?}
 
                     if (item instanceof TridentItem) return true;
 
@@ -119,8 +119,8 @@ public class ConfigHandler {
                     if (isItemEqualsId(item, "farmersdelight:skillet")) return 157.5F;
 
                     //? if >=1.21.11 {
-                    /*if (item.getDefaultInstance().is(ItemTags.SPEARS)) return -40F;
-                    *///?}
+                    if (item.getDefaultInstance().is(ItemTags.SPEARS)) return -40F;
+                    //?}
 
                     return 0f;
                 });
@@ -136,8 +136,8 @@ public class ConfigHandler {
                     if (isItemEqualsId(item, "farmersdelight:skillet")) return new float[]{0, 0, -0.65F / 16F};
 
                     //? if >=1.21.11 {
-                    /*if (item.getDefaultInstance().is(ItemTags.SPEARS)) return new float[]{0, -0.1F, 0F};
-                    *///?}
+                    if (item.getDefaultInstance().is(ItemTags.SPEARS)) return new float[]{0, -0.1F, 0F};
+                    //?}
 
                     return new float[]{0f, 0f, 0f};
                 });
@@ -161,12 +161,12 @@ public class ConfigHandler {
     }
 
 
-    private static ResourceLocation getResourceLocationFromItem(Item item) {
+    private static Identifier getIdentifierFromItem(Item item) {
         return BuiltInRegistries.ITEM.getKey(item);
     }
 
     public static boolean isItemEqualsId(Item item, String id) {
-        return getResourceLocationFromItem(item).toString().equals(id);
+        return getIdentifierFromItem(item).toString().equals(id);
     }
 
     public static boolean areStacksEqual(final ItemStack a, final ItemStack b) {
