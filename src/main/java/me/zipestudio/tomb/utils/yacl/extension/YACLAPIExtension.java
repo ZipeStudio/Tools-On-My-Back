@@ -1,0 +1,20 @@
+package me.zipestudio.tomb.utils.yacl.extension;
+
+import dev.isxander.yacl3.api.*;
+import me.zipestudio.tomb.utils.yacl.state.PreviewStateManager;
+import java.util.*;
+
+
+@SuppressWarnings("unused")
+public class YACLAPIExtension {
+
+    public static <A> ListOption.Builder<A> bindingE(ListOption.Builder<A> builder, Binding<List<A>> binding, boolean instant) {
+        builder.state(instant ? new PreviewStateManager<>(binding) : StateManager.createSimple(binding));
+        return builder;
+    }
+
+    public static <A> Option.Builder<A> bindingE(Option.Builder<A> builder, Binding<A> binding, boolean instant) {
+        builder.stateManager(instant ? new PreviewStateManager<>(binding) : StateManager.createSimple(binding));
+        return builder;
+    }
+}

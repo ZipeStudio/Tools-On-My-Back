@@ -1,0 +1,19 @@
+{
+	"required": true,
+	"package": "me.zipestudio.tomb.mixin",
+	"refmap": "${mod_id}.refmap.json",
+	"compatibilityLevel": "JAVA_${java}",
+	"mixins": [
+	],
+	"client": [
+		"AvatarRendererMixin",
+		"AvatarRenderStateMixin",
+		"ClientWorldMixin",
+		"PlayerTickMixin",
+		"InventoryMixin",
+		"ClientPacketListenerMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
