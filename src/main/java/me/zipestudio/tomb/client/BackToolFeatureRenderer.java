@@ -42,7 +42,12 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.Nullable;
 
-public class BackToolFeatureRenderer /*? >=1.21.9 {*//*<M extends PlayerModel> extends PlayerItemInHandLayer<AvatarRenderState, M> *//*?} else {*/ <M extends PlayerModel> extends PlayerItemInHandLayer<PlayerRenderState, M> /*?}*/ {
+public class BackToolFeatureRenderer
+//? >=1.21.9 {
+/*<M extends PlayerModel> extends PlayerItemInHandLayer<AvatarRenderState, M> {
+*///?} else {
+<M extends PlayerModel> extends PlayerItemInHandLayer<PlayerRenderState, M> {
+//?}
 
     //? if >=1.21.9 {
     /*public BackToolFeatureRenderer(RenderLayerParent<AvatarRenderState, M> context) {
