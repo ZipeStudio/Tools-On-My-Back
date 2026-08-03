@@ -49,6 +49,9 @@ Everything is set up in-game, from Mod Menu — no config files to edit by hand.
 <img src="https://github.com/ZipeStudio/tools-on-my-back/blob/master/assets/ingame_editor.gif?raw=true" width="100%" alt="ingame_editor">
 
 ### Profile sharing
+For example, I'll give you this profile for belt swords:<br>
+`[TOMB|iron_sword|a=1|s=.85|rx=-90|ry=90|ox=.34|oy=-.6|oz=-.22]`
+
 <img src="https://github.com/ZipeStudio/tools-on-my-back/blob/master/assets/profile_sharing.gif?raw=true" width="100%" alt="ingame_editor">
 
 !["Compatibility" Title](https://github.com/ZipeStudio/Vault/blob/main/design/mods/main/ZScompatible.png?raw=true)

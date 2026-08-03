@@ -396,13 +396,18 @@ public class ConfigHandler {
                 .orElseGet(() -> defaultOffset(stack.getItem()));
     }
 
+    /**
+     * Built-in offsets, in the same units the editor's sliders and a shared profile use: **+Y is up**.
+     * The Y values here were flipped when that convention was fixed — the renderer negates Y once, on its
+     * way into the model's own space, so everything above it can read the natural way round.
+     */
     public static float[] defaultOffset(Item item) {
-        if (item instanceof ShearsItem) return new float[]{0, 0.1F, 0};
+        if (item instanceof ShearsItem) return new float[]{0, -0.1F, 0};
         if (item instanceof ShieldItem) return new float[]{0, 0, -0.94F / 16F};
-        if (item instanceof TridentItem) return new float[]{0, 0.1F, 0.065F};
+        if (item instanceof TridentItem) return new float[]{0, -0.1F, 0.065F};
         if (isItemEqualsId(item, "farmersdelight:skillet")) return new float[]{0, 0, -0.65F / 16F};
         //? if >=1.21.11 {
-        if (item.getDefaultInstance().is(ItemTags.SPEARS)) return new float[]{0, -0.1F, 0F};
+        if (item.getDefaultInstance().is(ItemTags.SPEARS)) return new float[]{0, 0.1F, 0F};
         //?}
         return new float[]{0f, 0f, 0f};
     }

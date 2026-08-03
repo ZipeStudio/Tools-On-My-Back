@@ -581,36 +581,23 @@ public class ToolEditorScreen extends Screen {
             y = head(right, y + ROW_H + GROUP_GAP, RIGHT_W, TOMBServer.text("editor.section.match"), false);
             int narrowW = (RIGHT_W - 2 * GAP) * 3 / 10;
             int wideW = RIGHT_W - 2 * GAP - 2 * narrowW;
-            // A filter is live if the entry captured that component, or if the item in hand is one this
-            // entry covers and carries it — switching the filter on then captures it again. That is what
-            // keeps a saved entry editable: saving drops whatever no filter used, and the item itself is
-            // where it came from in the first place.
-            ItemStack hand = handStackFor(e);
-            boolean handName = !hand.isEmpty() && hand.get(DataComponents.CUSTOM_NAME) != null;
-            boolean handModelData = !hand.isEmpty() && hand.get(DataComponents.CUSTOM_MODEL_DATA) != null;
-            boolean handItemModel = false;
-            //? if >=1.21.4 {
-            handItemModel = !hand.isEmpty() && hand.get(DataComponents.ITEM_MODEL) != null;
-            //?}
-            boolean storedName = ConfigHandler.captured(e, DataComponents.CUSTOM_NAME);
-            boolean storedModelData = ConfigHandler.captured(e, DataComponents.CUSTOM_MODEL_DATA);
-            boolean storedItemModel = false;
-            //? if >=1.21.4 {
-            storedItemModel = ConfigHandler.captured(e, DataComponents.ITEM_MODEL);
-            //?}
+            // Each toggle says what IT matches on and nothing else. The tooltips used to carry three more
+            // shared paragraphs — what pruning does on save, and whether the component sat in the entry or
+            // in the item you were holding — which nobody could read through, and the hand half no longer
+            // describes how items get added anyway.
             // false: "Reset Entry" leaves the filters alone, the same way it leaves the item id and the
             // captured components alone — all three answer "which item", not "how is it drawn"
             addProp(matchToggle(right, y, narrowW, TOMBServer.text("editor.match_name"), e.isMatchName(),
                             (c, val) -> c.setMatchName(val)),
-                    matchTooltip("editor.match_name.tooltip", storedName, handName),
+                    TOMBServer.text("editor.match_name.tooltip"),
                     (c, ref) -> c.setMatchName(ref.isMatchName()), false);
             addProp(matchToggle(right + narrowW + GAP, y, narrowW, TOMBServer.text("editor.match_model_data"),
                             e.isMatchModelData(), (c, val) -> c.setMatchModelData(val)),
-                    matchTooltip("editor.match_model_data.tooltip", storedModelData, handModelData),
+                    TOMBServer.text("editor.match_model_data.tooltip"),
                     (c, ref) -> c.setMatchModelData(ref.isMatchModelData()), false);
             addProp(matchToggle(right + 2 * (narrowW + GAP), y, wideW, TOMBServer.text("editor.match_item_model"),
                             e.isMatchItemModel(), (c, val) -> c.setMatchItemModel(val)),
-                    matchTooltip("editor.match_item_model.tooltip", storedItemModel, handItemModel),
+                    TOMBServer.text("editor.match_item_model.tooltip"),
                     (c, ref) -> c.setMatchItemModel(ref.isMatchItemModel()), false);
 
             // ---- the panel's halves: everything above says WHICH item the entry is about, everything
@@ -1062,23 +1049,9 @@ public class ToolEditorScreen extends Screen {
                 .create(x, y, w, ROW_H, label, (btn, value) -> {
                     ToolEntry c = selected();
                     if (c == null) return;
-                    // switching a filter on needs a value to match against: take it off the item in hand
-                    // when the entry no longer carries one
-                    if (value) recaptureFromHand(c);
                     setter.accept(c, value);
                     updatePreview();
                 });
-    }
-
-    /**
-     * The filter's own explanation, plus why it is greyed out when the entry captured nothing for it.
-     */
-    private MutableComponent matchTooltip(String key, boolean captured, boolean fromHand) {
-        MutableComponent tooltip = TOMBServer.text(key)
-                .append(Component.literal("\n")).append(TOMBServer.text("editor.match.pruned"));
-        if (captured) return tooltip;
-        return tooltip.append(Component.literal("\n"))
-                .append(TOMBServer.text(fromHand ? "editor.match.from_hand" : "editor.match.absent"));
     }
 
     /**
@@ -1400,32 +1373,6 @@ public class ToolEditorScreen extends Screen {
         to.setOffsetX(from.getOffsetX());
         to.setOffsetY(from.getOffsetY());
         to.setOffsetZ(from.getOffsetZ());
-    }
-
-    /**
-     * The main-hand item when it is one this entry already covers — the only item an entry may take
-     * components from. Requiring the entry's own filters to match keeps a second, differently named sword
-     * from overwriting the name this entry is pinned to.
-     */
-    private ItemStack handStackFor(ToolEntry entry) {
-        if (minecraft == null || minecraft.player == null || entry == null) return ItemStack.EMPTY;
-        ItemStack held = minecraft.player.getMainHandItem();
-        if (held.isEmpty()) return ItemStack.EMPTY;
-        var key = BuiltInRegistries.ITEM.getKey(held.getItem());
-        if (key == null || !key.toString().equals(entry.getItemId())) return ItemStack.EMPTY;
-        return ConfigHandler.componentsMatch(held, entry) ? held : ItemStack.EMPTY;
-    }
-
-    /**
-     * Refills the entry's discriminator from the item in hand. Safe whenever the hand qualifies: that item
-     * has already been checked against the filters that are on, so everything they go by keeps its value —
-     * all that changes is that what a save dropped is back.
-     */
-    private void recaptureFromHand(ToolEntry entry) {
-        ItemStack hand = handStackFor(entry);
-        if (hand.isEmpty()) return;
-        String captured = ConfigHandler.encodeComponents(hand);
-        if (!captured.isEmpty() && !captured.equals(entry.getComponents())) entry.setComponents(captured);
     }
 
     private void copyToClipboard() {
@@ -2453,11 +2400,13 @@ public class ToolEditorScreen extends Screen {
 
         @Override
         protected void applyValue() {
-            // Store the two decimals the slider shows, and that a shared profile carries. Otherwise the
-            // config keeps 2.3360806 where the same setting imported from a profile reads 2.34, and the
-            // two never compare equal for all they are the same setting.
+            // Store exactly what the slider shows — the same rounding updateMessage does, not a different
+            // one. Angles are whole degrees and offsets and scale keep two decimals; storing more than that
+            // put 89.92 in the config and in a shared profile while the button read "90", which is how it
+            // was reported. It also keeps a value equal to the same value imported from a profile, which
+            // carries the shown digits and nothing more.
             float raw = min + (float) this.value * (max - min);
-            setter.accept(Math.round(raw * 100f) / 100f);
+            setter.accept(intFmt ? Math.round(raw) : Math.round(raw * 100f) / 100f);
         }
     }
 }

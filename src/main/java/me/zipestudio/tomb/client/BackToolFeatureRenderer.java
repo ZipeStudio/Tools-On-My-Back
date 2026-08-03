@@ -310,7 +310,11 @@ public class BackToolFeatureRenderer
         float[] offset = ConfigHandler.getToolOffset(stack);
 
         matrices.scale(scale, scale, scale);
-        matrices.translate(offset[0], offset[1], offset[2]);
+        // Y is negated on the way in. This runs in the entity model's own space, where +Y points DOWN, so
+        // a positive offset used to sink the item and a negative one lifted it — backwards from what the
+        // slider reads. Flipping it here is the only place that has to know: the config, the editor and a
+        // shared profile all mean "+ is up" now.
+        matrices.translate(offset[0], -offset[1], offset[2]);
 
         if (mainArm == HumanoidArm.RIGHT) {
             matrices.scale(-1F, 1F, -1F);

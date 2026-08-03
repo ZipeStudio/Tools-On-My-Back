@@ -35,6 +35,8 @@ public class TOMBClient {
 	// the preview and nothing else. The real player, being a different object, is unaffected.
 	public static Player PREVIEW_DUMMY = null;
 
+	public static final SystemToast.SystemToastId TOMB_PERIODIC_NOTIFICATION = new SystemToast.SystemToastId(2000);
+
 	public static Logger LOGGER = LoggerFactory.getLogger(TOMBServer.MOD_NAME + "/Client");
 
 	public static void onInitializeClient() {
@@ -69,7 +71,7 @@ public class TOMBClient {
 		*///?} else {
 		/*var toasts = Minecraft.getInstance().getToasts();
 		*///?}
-		SystemToast.addOrUpdate(toasts, SystemToast.SystemToastId.PERIODIC_NOTIFICATION, title, body);
+		SystemToast.addOrUpdate(toasts, TOMB_PERIODIC_NOTIFICATION, title, body);
 	}
 
 	/**
