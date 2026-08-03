@@ -48,17 +48,8 @@ Everything is set up in-game, from Mod Menu — no config files to edit by hand.
 
 <img src="https://github.com/ZipeStudio/tools-on-my-back/blob/master/assets/ingame_editor.gif?raw=true" width="100%" alt="ingame_editor">
 
-**What you can do**
-- **Add item** — pick one straight from your inventory. Or **Add empty** and type the id by hand.
-- **Apply to all similar** — one entry covering every item of the same type: all swords, all axes, and so on.
-- **NBT filters** (**Name** / **CMD** / **Model**) — tell server and resourcepack items apart, so a renamed or retextured variant gets an entry of its own. **Works with CIT Resewn packs too!**
-- **Display**, **Flip**, **Scale**, **Rotation**, **Position** — where the item sits on the back, per entry.
-- **Copy profile** / **Paste profile** — one line of text you can paste anywhere. Other players running the mod see it in chat as a clickable `[TOMB | Import]` chip.
-- **Pose**, **Skin**, **Cape** — check it standing or sneaking, on your own skin or on Steve and Alex. Drag the model to turn it, scroll to zoom, right-click to reset the view.
-
 ### Profile share
-
-<img src="https://github.com/ZipeStudio/tools-on-my-back/blob/master/assets/profile_share.gif?raw=true" width="100%" alt="ingame_editor">
+<img src="https://github.com/ZipeStudio/tools-on-my-back/blob/master/assets/profile_sharing.gif?raw=true" width="100%" alt="ingame_editor">
 
 !["Compatibility" Title](https://github.com/ZipeStudio/Vault/blob/main/design/mods/main/ZScompatible.png?raw=true)
 
@@ -78,6 +69,14 @@ Everything is set up in-game, from Mod Menu — no config files to edit by hand.
 <img src="https://github.com/ZipeStudio/tools-on-my-back/blob/master/assets/rp_showcase.gif?raw=true" width="100%" alt="">
 
 !["Configurable" Title](https://github.com/ZipeStudio/Vault/blob/main/design/mods/main/ZSconfigurable.png?raw=true)
+
+### About in-game editor:
+- **Add item** — pick one straight from your inventory. Or **Add empty** and type the id by hand.
+- **Apply to all similar** — one entry covering every item of the same type: all swords, all axes, and so on.
+- **NBT filters** (**Name** / **CMD** / **Model**) — tell server and resourcepack items apart, so a renamed or retextured variant gets an entry of its own. **Works with CIT Resewn packs too!**
+- **Display**, **Flip**, **Scale**, **Rotation**, **Position** — where the item sits on the back, per entry.
+- **Copy profile** / **Paste profile** — one line of text you can paste anywhere. Other players running the mod see it in chat as a clickable `[TOMB | Import]` chip.
+- **Pose**, **Skin**, **Cape** — check it standing or sneaking, on your own skin or on Steve and Alex. Drag the model to turn it, scroll to zoom, right-click to reset the view.
 
 ### Right/Left Hand Support
 > <img src="https://github.com/ZipeStudio/tools-on-my-back/blob/master/assets/hand_swap.png?raw=true" width="100%" alt="">
