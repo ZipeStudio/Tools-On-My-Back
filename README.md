@@ -48,7 +48,7 @@ Everything is set up in-game, from Mod Menu — no config files to edit by hand.
 
 <img src="https://github.com/ZipeStudio/tools-on-my-back/blob/master/assets/ingame_editor.gif?raw=true" width="100%" alt="ingame_editor">
 
-### Profile share
+### Profile sharing
 <img src="https://github.com/ZipeStudio/tools-on-my-back/blob/master/assets/profile_sharing.gif?raw=true" width="100%" alt="ingame_editor">
 
 !["Compatibility" Title](https://github.com/ZipeStudio/Vault/blob/main/design/mods/main/ZScompatible.png?raw=true)
