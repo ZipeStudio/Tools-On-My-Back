@@ -2,30 +2,14 @@ package me.zipestudio.tomb.utils.modmenu;
 
 //? if fabric {
 import com.terraformersmc.modmenu.api.*;
-import me.zipestudio.tomb.TOMBServer;
-import net.fabricmc.loader.api.*;
-import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.client.gui.screens.Screen;
 
 public abstract class AbstractModMenuIntegration implements ModMenuApi {
 
+	// The mod's own editor is the config screen, so there is no config library to check for.
 	@Override
 	public ConfigScreenFactory<?> getModConfigScreenFactory() {
-		FabricLoader fabricLoader = FabricLoader.getInstance();
-		if (fabricLoader.isModLoaded("yet_another_config_lib_v3")) {
-			ModContainer modContainer = fabricLoader.getModContainer("yet_another_config_lib_v3").orElseThrow();
-			Version version = modContainer.getMetadata().getVersion();
-			try {
-				Version requestsVersion = Version.parse(TOMBServer.YACL_DEPEND_VERSION);
-				if (version.compareTo(requestsVersion) >= 0) {
-					return this::createConfigScreen;
-				}
-			} catch (VersionParsingException e) {
-				TOMBServer.LOGGER.error("Failed to compare YACL version, tell mod author about this error: ", e);
-			}
-			return parent -> NoConfigLibraryScreen.createScreenAboutOldVersion(parent, version.getFriendlyString());
-		}
-		return NoConfigLibraryScreen::createScreen;
+		return this::createConfigScreen;
 	}
 
 	protected abstract Screen createConfigScreen(Screen parent);
@@ -33,48 +17,19 @@ public abstract class AbstractModMenuIntegration implements ModMenuApi {
 
 //?} elif neoforge {
 
-/*import me.zipestudio.tomb.TOMBServer;
-import me.zipestudio.tomb.client.TOMBClient;
-import net.neoforged.fml.*;
-import net.neoforged.fml.loading.FMLLoader;
+/*import net.neoforged.fml.ModContainer;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.minecraft.client.gui.screens.Screen;
-import org.apache.maven.artifact.versioning.*;
 
 public abstract class AbstractModMenuIntegration {
 
+	// The mod's own editor is the config screen, so there is no config library to check for.
 	public void register(ModContainer container) {
-		container.registerExtensionPoint(IConfigScreenFactory.class, (modContainer, parent) -> {
-			if (isModLoaded("yet_another_config_lib_v3", false)) {
-				ModContainer yacl = ModList.get().getModContainerById("yet_another_config_lib_v3").orElseThrow();
-				ArtifactVersion version = yacl.getModInfo().getVersion();
-				try {
-					ArtifactVersion requestsVersion = new DefaultArtifactVersion(TOMBServer.YACL_DEPEND_VERSION);
-					if (version.compareTo(requestsVersion) >= 0) {
-						return this.createConfigScreen(parent);
-					}
-				} catch (Exception e) {
-					TOMBClient.LOGGER.error("Failed to compare YACL version, tell mod author about this error: ", e);
-				}
-				return NoConfigLibraryScreen.createScreenAboutOldVersion(parent, version.getQualifier());
-			}
-			return NoConfigLibraryScreen.createScreen(parent);
-		});
+		container.registerExtensionPoint(IConfigScreenFactory.class,
+				(modContainer, parent) -> this.createConfigScreen(parent));
 	}
 
 	protected abstract Screen createConfigScreen(Screen parent);
-
-	private boolean isModLoaded(String modid, boolean loadingPhase) {
-		if (loadingPhase) {
-			//? if >=1.21.9 {
-			return FMLLoader.getCurrent().getLoadingModList().getModFileById(modid) != null;
-			//?} else {
-			/^return FMLLoader.getLoadingModList().getModFileById(modid) != null;
-			 ^///?}
-		} else {
-			return ModList.get().isLoaded(modid);
-		}
-	}
 
 }
 

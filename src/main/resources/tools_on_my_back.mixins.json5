@@ -7,11 +7,15 @@
 	],
 	"client": [
 		"AvatarRendererMixin",
+		//? if >=1.21.2 {
 		"AvatarRenderStateMixin",
+		//?}
 		"ClientWorldMixin",
 		"PlayerTickMixin",
 		"InventoryMixin",
-		"ClientPacketListenerMixin"
+		"ClientPacketListenerMixin",
+		"ChatListenerMixin",
+		"ScreenClickMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

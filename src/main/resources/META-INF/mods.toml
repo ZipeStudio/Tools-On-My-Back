@@ -26,10 +26,3 @@ mandatory = true
 versionRange = "${minecraft}"
 ordering = "NONE"
 side = "BOTH"
-
-[[dependencies.${mod_id}]]
-modId = "yacl"
-mandatory = false
-versionRange = ""
-ordering = "NONE"
-side = "BOTH"

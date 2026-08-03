@@ -8,13 +8,13 @@
     <td style="vertical-align: top;">
       <div style="display: flex; flex-direction: column;">
         <div style="display: flex;">
-          <a href="https://github.com/ZipeStudio/Tools-On-My-Back">
+          <a href="https://github.com/ZipeStudio/tools-on-my-back">
             <img src="https://github.com/ZipeStudio/Vault/blob/main/design/mods/main/github.png?raw=true" title="Github page">
           </a>
-          <a href="https://modrinth.com/mod/Tools-On-My-Back">
+          <a href="https://modrinth.com/mod/tools-on-my-back">
             <img src="https://github.com/ZipeStudio/Vault/blob/main/design/mods/main/modrinth.png?raw=true" title="Modrinth page">
           </a>
-          <a href="https://www.curseforge.com/minecraft/mc-mods/Tools-On-My-Back">
+          <a href="https://www.curseforge.com/minecraft/mc-mods/tools-on-my-back">
             <img src="https://github.com/ZipeStudio/Vault/blob/main/design/mods/main/curseforge.png?raw=true" title="CurseForge page">
           </a>
         </div>
@@ -36,102 +36,59 @@
 
 !["Description" Title](https://github.com/ZipeStudio/Vault/blob/main/design/mods/main/ZSdescription.png?raw=true)
 
-![banner](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/tomb_banner_optimize.gif?raw=true)
+<img src="https://github.com/ZipeStudio/tools-on-my-back/blob/master/assets/tomb_banner_optimize.gif?raw=true" width="100%" alt="tomb_banner_optimize">
 
 **Tools On My Back** — A client-side mod that visually displays the last used tool on the player's back. Adds immersion and style to your adventures, giving you the look of a seasoned traveler.
 
 ### Showcase
-![showcase](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/showcase.gif?raw=true)
+<img src="https://github.com/ZipeStudio/tools-on-my-back/blob/master/assets/showcase.gif?raw=true" width="100%" alt="showcase">
+
+### 🪄 In-game editor 🪄
+Everything is set up in-game, from Mod Menu — no config files to edit by hand. The middle panel is your own character, so every change shows up as you make it.
+
+<img src="https://github.com/ZipeStudio/tools-on-my-back/blob/master/assets/ingame_editor.gif?raw=true" width="100%" alt="ingame_editor">
+
+**What you can do**
+- **Add item** — pick one straight from your inventory. Or **Add empty** and type the id by hand.
+- **Apply to all similar** — one entry covering every item of the same type: all swords, all axes, and so on.
+- **NBT filters** (**Name** / **CMD** / **Model**) — tell server and resourcepack items apart, so a renamed or retextured variant gets an entry of its own. **Works with CIT Resewn packs too!**
+- **Display**, **Flip**, **Scale**, **Rotation**, **Position** — where the item sits on the back, per entry.
+- **Copy profile** / **Paste profile** — one line of text you can paste anywhere. Other players running the mod see it in chat as a clickable `[TOMB | Import]` chip.
+- **Pose**, **Skin**, **Cape** — check it standing or sneaking, on your own skin or on Steve and Alex. Drag the model to turn it, scroll to zoom, right-click to reset the view.
+
+### Profile share
+
+<img src="https://github.com/ZipeStudio/tools-on-my-back/blob/master/assets/profile_share.gif?raw=true" width="100%" alt="ingame_editor">
 
 !["Compatibility" Title](https://github.com/ZipeStudio/Vault/blob/main/design/mods/main/ZScompatible.png?raw=true)
 
 ### Mod Compatibility
 - Works seamlessly with other popular mods.
 
-![mods_showcase](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/mods_showcase.gif?raw=true)
+<img src="https://github.com/ZipeStudio/tools-on-my-back/blob/master/assets/mods_showcase.gif?raw=true" width="100%" alt="mods_showcase">
 
 ### Multiplayer Friendly
 - Fully client-side — visible only to you.
 
-![multiplayer_showcase](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/multiplayer_showcase.gif?raw=true)
+<img src="https://github.com/ZipeStudio/tools-on-my-back/blob/master/assets/multiplayer_showcase.gif?raw=true" width="100%" alt="multiplayer_showcase">
 
 ### Custom Models (Resource Packs)
 - Supports resource packs with custom models.
 
-![rp_showcase](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/rp_showcase.gif?raw=true)
+<img src="https://github.com/ZipeStudio/tools-on-my-back/blob/master/assets/rp_showcase.gif?raw=true" width="100%" alt="">
 
 !["Configurable" Title](https://github.com/ZipeStudio/Vault/blob/main/design/mods/main/ZSconfigurable.png?raw=true)
 
 ### Right/Left Hand Support
-> ![right_hand](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/hand_swap.png?raw=true)
+> <img src="https://github.com/ZipeStudio/tools-on-my-back/blob/master/assets/hand_swap.png?raw=true" width="100%" alt="">
 > <details><summary>Hands Showcase</summary>
 >
 > Right Hand
-> ![right_hand](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/right_hand.png?raw=true)
+> <img src="https://github.com/ZipeStudio/tools-on-my-back/blob/master/assets/right_hand.png?raw=true" width="100%" alt="">
 >
 > Left Hand
-> ![left_hand](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/left_hand.png?raw=true)
+> <img src="https://github.com/ZipeStudio/tools-on-my-back/blob/master/assets/left_hand.png?raw=true" width="100%" alt="">
 > </details>
-
-<br/>
-
-### Settings
-> ![settings](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/settings.png?raw=true)
-
-<br/>
-
-### Simple Configuration File
-The configuration file can be found at:</br>
-`/config/tools-on-my-back.json5`
-
-> <pre style="border-left:3px solid #4CAF50; padding:10px;"><code>{
->  "enableMod": true,
->  "renderWithCape": true,
->  "renderWithElytra": true,
->  "tools": [
->    {
->      "enabled": false,
->      "itemId": "minecraft:diamond_sword",
->      "group": "BACK",
->      "is3DModel": false,
->      "scale": 1,
->      "angle": 0,
->      "offsetX": 0.0,
->      "offsetY": 0.0,
->      "offsetZ": 0
->    },
->    {
->      "enabled": true,
->      "itemId": "farmersdelight:skillet",
->      "group": "BACK",
->      "is3DModel": true,
->      "scale": 1.2,
->      "angle": 157.5,
->      "offsetX": 0.0,
->      "offsetY": 0.0,
->      "offsetZ": -0.040625
->    },
->    {
->    // YOUR ITEMS
->    }
->  ]
->}
-> </code></pre>
-> <details><summary>⚙️ Note:</summary>
->
-> Most basic settings (like enabling the mod or rendering with a cape/elytra) can be configured in-game via the YACL menu.</br>
-> However, adding or modifying items in the tools list currently requires manual editing of the .json5 config file (see below).</br>
-> Full YACL support for tool configuration is still in development.
-> 
-> | Parameter                           | Description                                                                                                                                                                          |
-> |-------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-> | **itemId**                          | The full item ID (e.g. `minecraft:diamond_sword` or `my_mod:my_item`).<br/>!["id_settings"](https://github.com/ZipeStudio/Tools-On-My-Back/blob/master/img/id_settings.png?raw=true) |
-> | **group**                           | Currently only `"BACK"` — doesn’t affect behavior yet.                                                                                                                               |
-> | **is3DModel**                       | Set to `true` for 3D item models (like a shield).                                                                                                                                    |
-> | **scale**                           | Controls the overall size of the displayed item.                                                                                                                                     |
-> | **angle**                           | Rotation angle of the item (in degrees).                                                                                                                                             |
-> | **offsetX<br/>offsetY<br/>offsetZ** | Adjusts item position relative to the player’s back.                                                                                                                                 |
-</details>
 
 !["Support" Title](https://github.com/ZipeStudio/Vault/blob/main/design/mods/main/ZSsupport.png?raw=true)
 
@@ -149,4 +106,6 @@ Yeah, you got it right. Just by advertising, you will support the mod and the cr
 
 !["Licensing" Title](https://github.com/ZipeStudio/Vault/blob/main/design/mods/main/ZSlicensing.png?raw=true)
 
-### [See the original mod repository](https://github.com/ZipeStudio/Tools-On-My-Back)
+The license terms for this project are defined in the [LICENSE](https://github.com/ZipeStudio/tools-on-my-back/blob/master/LICENSE.md) file in this repository. That file always takes precedence over any license shown anywhere else.
+
+### [See the original mod repository](https://github.com/ZipeStudio/tools-on-my-back)

@@ -13,7 +13,7 @@
     },
     "license": "${mod_license}",
     "icon": "icon/icon.png",
-    "environment": "*",
+    "environment": "${fabric_trick_side}",
     "entrypoints": {
         "main": [
             "me.zipestudio.tomb.entrypoint.CommonEntrypoint"
@@ -31,7 +31,7 @@
         "java": ">=${java}",
         "${fabric_api_id}": "*"
     },
-    "accessWidener": "${fabric_trick_accesswidener_id}",
+	"accessWidener": "${fabric_trick_accesswidener_id}",
     "mixins": [
         "${fabric_trick_mixin_configs}"
     ]

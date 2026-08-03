@@ -65,14 +65,46 @@ public class ConfigUtils {
 	}
 
 	public static <A> void saveConfig(A config, Codec<A> codec, File location, Logger logger) {
+		saveConfig(config, codec, location, logger, java.util.List.of());
+	}
+
+	/**
+	 * @param keyOrder the order object keys are written in, at every depth. Codecs hand their fields to the
+	 *                 ops in whatever order the builder's map iterates, which has nothing to do with the
+	 *                 order the codec declares them in — so a saved config comes out shuffled and a diff of
+	 *                 two of them is unreadable. Keys that are not listed keep their place at the end.
+	 */
+	public static <A> void saveConfig(A config, Codec<A> codec, File location, Logger logger,
+									  java.util.List<String> keyOrder) {
 		logger.debug("Saving config...");
 		try (FileWriter writer = new FileWriter(location, StandardCharsets.UTF_8)) {
-			String json = GSON.toJson(codec.encode(config, JsonOps.INSTANCE, JsonOps.INSTANCE.empty())/*? if >=1.20.5 {*/.getOrThrow());/*?} else*///.getOrThrow(false, logger::error));
+			JsonElement encoded = codec.encode(config, JsonOps.INSTANCE, JsonOps.INSTANCE.empty())/*? if >=1.20.5 {*/.getOrThrow();/*?} else*///.getOrThrow(false, logger::error);
+			String json = GSON.toJson(reorder(encoded, keyOrder));
 			writer.write(json);
 		} catch (Exception e) {
 			logger.error("Failed to save config:", e);
 		}
 		logger.debug("Config saved");
+	}
+
+	/** Rebuilds objects with their keys in the given order; Gson keeps insertion order when writing. */
+	private static JsonElement reorder(JsonElement element, java.util.List<String> keyOrder) {
+		if (keyOrder.isEmpty()) return element;
+		if (element instanceof JsonArray array) {
+			JsonArray out = new JsonArray();
+			for (JsonElement item : array) out.add(reorder(item, keyOrder));
+			return out;
+		}
+		if (!(element instanceof JsonObject object)) return element;
+
+		JsonObject out = new JsonObject();
+		for (String key : keyOrder) {
+			if (object.has(key)) out.add(key, reorder(object.get(key), keyOrder));
+		}
+		for (java.util.Map.Entry<String, JsonElement> entry : object.entrySet()) {
+			if (!out.has(entry.getKey())) out.add(entry.getKey(), reorder(entry.getValue(), keyOrder));
+		}
+		return out;
 	}
 
 }

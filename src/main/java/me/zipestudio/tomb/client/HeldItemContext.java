@@ -29,13 +29,14 @@ public class HeldItemContext {
 
         if (ConfigHandler.areStacksEqual(droppedStack, previousMain)) {
             previousMain = ItemStack.EMPTY;
+            droppedStack = ItemStack.EMPTY;
         }
 
         if (ConfigHandler.areStacksEqual(main, previousMain)) {
             previousMain = ItemStack.EMPTY;
         }
 
-        if (!ConfigHandler.areStacksEqual(main, activeMain) && ConfigHandler.isCurrentItem(activeMain.getItem())) {
+        if (!ConfigHandler.areStacksEqual(main, activeMain) && ConfigHandler.isCurrentItem(activeMain)) {
             previousMain = activeMain;
         }
 
