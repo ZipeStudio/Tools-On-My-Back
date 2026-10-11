@@ -9,6 +9,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
  *///?}
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import org.joml.Quaternionf;
@@ -127,6 +128,10 @@ public final class EditorPainter {
         graphics.centeredText(font, label, centerX, y, colour);
     }
 
+    public void centeredLine(FormattedCharSequence line, int centerX, int y, int colour) {
+        graphics.centeredText(font, line, centerX, y, colour);
+    }
+
     public void item(ItemStack stack, int x, int y) {
         graphics.item(stack, x, y);
     }
@@ -143,6 +148,10 @@ public final class EditorPainter {
         graphics.drawCenteredString(font, label, centerX, y, colour);
     }
 
+    public void centeredLine(FormattedCharSequence line, int centerX, int y, int colour) {
+        graphics.drawCenteredString(font, line, centerX, y, colour);
+    }
+
     public void item(ItemStack stack, int x, int y) {
         graphics.renderItem(stack, x, y);
     }
@@ -155,6 +164,15 @@ public final class EditorPainter {
         ^///?}
     }
     *///?}
+
+    public void centeredWrapped(Component label, int left, int right, int y, int colour) {
+        int centerX = (left + right) / 2;
+        int line = y;
+        for (FormattedCharSequence part : font.split(label, right - left)) {
+            centeredLine(part, centerX, line, colour);
+            line += 10;
+        }
+    }
 
     public void scrollingText(Component label, Font font, int left, int top, int right, int bottom,
                               int textY, int colour) {

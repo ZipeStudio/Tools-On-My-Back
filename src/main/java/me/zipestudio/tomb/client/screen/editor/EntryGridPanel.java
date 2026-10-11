@@ -254,7 +254,7 @@ public final class EntryGridPanel {
         }
         int hovered = over(mouseX, mouseY) ? entryAt(mouseX, mouseY) : -1;
         if (pickerOpen && pickerStacks.isEmpty()) {
-            painter.centeredText(TOMBServer.text("editor.picker.empty"), (left + right) / 2, top + 6, COLOUR_EMPTY);
+            painter.centeredWrapped(TOMBServer.text("editor.picker.empty"), left + 2, right - 2, top + 6, COLOUR_EMPTY);
             return -1;
         }
         painter.scissorOn(left + 1, top + 1, right - 1, bottom - 1);

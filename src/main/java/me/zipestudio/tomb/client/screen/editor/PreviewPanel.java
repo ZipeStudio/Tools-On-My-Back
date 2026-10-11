@@ -188,25 +188,33 @@ public final class PreviewPanel {
             case STEVE -> new GameProfile(PreviewCompat.defaultSkinUuid(false), "Steve");
             case ALEX -> new GameProfile(PreviewCompat.defaultSkinUuid(true), "Alex");
         };
-        dummy = new RemotePlayer(minecraft.level, profile) {
-            @Override
-            public boolean isModelPartShown(PlayerModelPart part) {
-                if (part == PlayerModelPart.CAPE && !showCape) return false;
-                if (minecraft.player != null) return minecraft.player.isModelPartShown(part);
-                return super.isModelPartShown(part);
-            }
-
-            @Override
-            public boolean isSpectator() {
-                return false;
-            }
-        };
+        dummy = new PreviewDummy(minecraft.level, profile);
         dummy.setId(minecraft.player.getId());
         TOMBClient.PREVIEW_DUMMY = dummy;
         dummy.setCustomNameVisible(false);
         PreviewCompat.hideNameTag(dummy, minecraft.player);
         PreviewCompat.seedCape(dummy);
         return dummy;
+    }
+
+    private final class PreviewDummy extends RemotePlayer {
+
+        private PreviewDummy(net.minecraft.client.multiplayer.ClientLevel level, GameProfile profile) {
+            super(level, profile);
+        }
+
+        @Override
+        public boolean isModelPartShown(PlayerModelPart part) {
+            if (part == PlayerModelPart.CAPE && !showCape) return false;
+            if (minecraft.player != null) return minecraft.player.isModelPartShown(part);
+            return super.isModelPartShown(part);
+        }
+
+        @Override
+        public boolean isSpectator() {
+            return false;
+        }
+
     }
 
     public void drawGlass(EditorPainter painter) {

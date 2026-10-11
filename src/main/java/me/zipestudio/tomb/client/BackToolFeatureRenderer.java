@@ -321,7 +321,7 @@ public class BackToolFeatureRenderer
         }
         //?}
         //? if >=26.3 {
-        /*if (!stack.isEmpty()) {
+        if (!stack.isEmpty()) {
             ItemDisplayContext displayContext = ConfigHandler.getDisplayContext(stack);
             Player holder = ((PlayerRenderStateWithParent) state).tomb$getEntity();
             ItemStackRenderState itemState = new ItemStackRenderState();
@@ -330,8 +330,8 @@ public class BackToolFeatureRenderer
             itemState.submit(matrices, commandQueue, light,
                     net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY, 0);
         }
-        *///?} else if >=1.21.5 {
-        Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer().renderItem(
+        //?} else if >=1.21.5 {
+        /*Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer().renderItem(
                 ((PlayerRenderStateWithParent) state).tomb$getEntity(),
                 stack,
                 ConfigHandler.getDisplayContext(stack),
@@ -339,7 +339,7 @@ public class BackToolFeatureRenderer
                 commandQueue,
                 light
         );
-        //?} else if >=1.21.2 {
+        *///?} else if >=1.21.2 {
         /*Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer().renderItem(
                 ((PlayerRenderStateWithParent) state).tomb$getEntity(),
                 stack,
@@ -365,10 +365,10 @@ public class BackToolFeatureRenderer
 
     private static void rotateDegrees(PoseStack matrices, Axis axis, float degrees) {
         //? if >=26.3 {
-        /*matrices.rotateDegrees(axis, degrees);
-        *///?} else {
-        matrices.mulPose(axis.rotationDegrees(degrees));
-        //?}
+        matrices.rotateDegrees(axis, degrees);
+        //?} else {
+        /*matrices.mulPose(axis.rotationDegrees(degrees));
+        *///?}
     }
 
     //? if >=1.21.9 {

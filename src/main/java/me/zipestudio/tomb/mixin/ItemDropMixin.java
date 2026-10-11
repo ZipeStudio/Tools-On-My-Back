@@ -10,12 +10,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 //? if >=26.3 {
-/*import net.minecraft.util.Prediction;
+import net.minecraft.util.Prediction;
 import net.minecraft.world.entity.LivingEntity;
-*///?}
+//?}
 
 //? if >=26.3 {
-/*@Mixin(LivingEntity.class)
+@Mixin(LivingEntity.class)
 public abstract class ItemDropMixin {
 
     @Inject(
@@ -26,8 +26,8 @@ public abstract class ItemDropMixin {
                             CallbackInfoReturnable<ItemEntity> cir) {
         if ((Object) this instanceof Player player) markDropped(player, itemStack);
     }
-*///?} else {
-@Mixin(Player.class)
+//?} else {
+/*@Mixin(Player.class)
 public abstract class ItemDropMixin {
 
     @Inject(
@@ -38,7 +38,7 @@ public abstract class ItemDropMixin {
                             CallbackInfoReturnable<ItemEntity> cir) {
         markDropped((Player) (Object) this, itemStack);
     }
-//?}
+*///?}
 
     @Unique
     private static void markDropped(Player player, ItemStack itemStack) {
