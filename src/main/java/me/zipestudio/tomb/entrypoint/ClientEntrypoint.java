@@ -34,4 +34,21 @@ public class ClientEntrypoint {
 
 }
 
+*///?} elif forge {
+
+/*import me.zipestudio.tomb.client.TOMBClient;
+import me.zipestudio.tomb.utils.modmenu.ModMenuIntegration;
+import net.minecraftforge.fml.ModLoadingContext;
+
+public class ClientEntrypoint {
+
+	public static void onInitializeClient() {
+		TOMBClient.onInitializeClient();
+
+		ModMenuIntegration integration = new ModMenuIntegration();
+		integration.register(ModLoadingContext.get().getContainer());
+	}
+
+}
+
 *///?}

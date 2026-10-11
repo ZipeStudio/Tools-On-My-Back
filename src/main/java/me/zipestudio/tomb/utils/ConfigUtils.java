@@ -68,12 +68,6 @@ public class ConfigUtils {
 		saveConfig(config, codec, location, logger, java.util.List.of());
 	}
 
-	/**
-	 * @param keyOrder the order object keys are written in, at every depth. Codecs hand their fields to the
-	 *                 ops in whatever order the builder's map iterates, which has nothing to do with the
-	 *                 order the codec declares them in — so a saved config comes out shuffled and a diff of
-	 *                 two of them is unreadable. Keys that are not listed keep their place at the end.
-	 */
 	public static <A> void saveConfig(A config, Codec<A> codec, File location, Logger logger,
 									  java.util.List<String> keyOrder) {
 		logger.debug("Saving config...");
@@ -87,7 +81,6 @@ public class ConfigUtils {
 		logger.debug("Config saved");
 	}
 
-	/** Rebuilds objects with their keys in the given order; Gson keeps insertion order when writing. */
 	private static JsonElement reorder(JsonElement element, java.util.List<String> keyOrder) {
 		if (keyOrder.isEmpty()) return element;
 		if (element instanceof JsonArray array) {

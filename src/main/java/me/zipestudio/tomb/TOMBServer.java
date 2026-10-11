@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 public class TOMBServer {
 
-	public static final String MOD_NAME = /*$ mod_name*/ "Tools On My Back";
+	public static final String MOD_NAME = /*$ mod_name*/ "Tools On My Back (TOMB)";
 	public static final String MOD_ID = /*$ mod_id*/ "tools_on_my_back";
 
 	public static Logger LOGGER = LoggerFactory.getLogger(TOMBServer.MOD_NAME);

@@ -25,7 +25,7 @@
           <a href="https://t.me/zipeleaf">
             <img src="https://github.com/ZipeStudio/Vault/blob/main/design/mods/main/telegram.png?raw=true" title="Telegram channel">
           </a>
-          <a href="https://ko-fi.com/zipestudio/tip">
+          <a href="https://www.patreon.com/cw/ZipeStudio/membership">
             <img src="https://github.com/ZipeStudio/Vault/blob/main/design/mods/main/support.png?raw=true" title="Support me (thx)">
           </a>
         </div>
@@ -52,7 +52,7 @@ Everything is set up in-game, from Mod Menu — no config files to edit by hand.
 For example, I'll give you this profile for belt swords:<br>
 `[TOMB|iron_sword|a=1|s=.85|rx=-90|ry=90|ox=.34|oy=-.6|oz=-.22]`
 
-<img src="https://github.com/ZipeStudio/tools-on-my-back/blob/master/assets/profile_sharing.gif?raw=true" width="100%" alt="ingame_editor">
+<img src="https://github.com/ZipeStudio/tools-on-my-back/blob/master/assets/profile_sharing.gif?raw=true" width="100%" alt="profile_sharing">
 
 !["Compatibility" Title](https://github.com/ZipeStudio/Vault/blob/main/design/mods/main/ZScompatible.png?raw=true)
 
@@ -69,7 +69,7 @@ For example, I'll give you this profile for belt swords:<br>
 ### Custom Models (Resource Packs)
 - Supports resource packs with custom models.
 
-<img src="https://github.com/ZipeStudio/tools-on-my-back/blob/master/assets/rp_showcase.gif?raw=true" width="100%" alt="">
+<img src="https://github.com/ZipeStudio/tools-on-my-back/blob/master/assets/rp_showcase.gif?raw=true" width="100%" alt="rp_showcase">
 
 !["Configurable" Title](https://github.com/ZipeStudio/Vault/blob/main/design/mods/main/ZSconfigurable.png?raw=true)
 

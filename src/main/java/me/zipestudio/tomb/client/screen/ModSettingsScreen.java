@@ -2,79 +2,61 @@ package me.zipestudio.tomb.client.screen;
 
 import me.zipestudio.tomb.TOMBServer;
 import me.zipestudio.tomb.client.TOMBClient;
+import me.zipestudio.tomb.client.screen.editor.EditorLayout.Slot;
+import me.zipestudio.tomb.client.screen.editor.EditorWidgets;
 import me.zipestudio.tomb.config.LeafyConfig;
-import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.CycleButton;
 import net.minecraft.client.gui.components.StringWidget;
-import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.Component;
 
-import java.time.Duration;
-
-/**
- * The handful of settings that are about the mod rather than about one item. They lived in the editor for
- * a while and were not worth the room: three switches nobody touches twice were taking a third of the
- * panel the preview needed.
- *
- * <p>Built out of widgets alone — no render override — so it needs no branch for the retained-mode GUI
- * rewrite at 26.1. Values are written straight into the live config; the editor this returns to owns
- * saving, so its Save and Cancel cover these as well.
- */
 public class ModSettingsScreen extends Screen {
 
-    private static final int ROW_W = 220;
-    private static final int ROW_H = 20;
-    private static final int STEP = 24;
+    private static final int ROW_WIDTH = 220;
+    private static final int ROW_HEIGHT = 20;
+    private static final int ROW_STEP = 24;
 
     private final Screen parent;
+    private final Runnable onLeave;
     private final LeafyConfig config;
 
-    public ModSettingsScreen(Screen parent) {
+    public ModSettingsScreen(Screen parent, Runnable onLeave) {
         super(TOMBServer.text("settings.title"));
         this.parent = parent;
+        this.onLeave = onLeave;
         this.config = LeafyConfig.getInstance();
     }
 
     @Override
     protected void init() {
-        int cx = this.width / 2;
+        int left = this.width / 2 - ROW_WIDTH / 2;
         int y = this.height / 2 - 58;
 
-        addRenderableWidget(new StringWidget(cx - ROW_W / 2, y, ROW_W, 18, this.title, this.font));
+        addRenderableWidget(new StringWidget(left, y, ROW_WIDTH, 18, this.title, this.font));
 
-        y += STEP + 4;
-        addRenderableWidget(tip(CycleButton.onOffBuilder(config.isEnableMod())
-                        .create(cx - ROW_W / 2, y, ROW_W, ROW_H, TOMBServer.text("editor.mod_enabled"),
-                                (btn, val) -> config.setEnableMod(val)),
-                TOMBServer.text("editor.mod_enabled.tooltip")));
+        y += ROW_STEP + 4;
+        addRenderableWidget(EditorWidgets.plainFlag(row(left, y), "editor.mod_enabled",
+                config.isEnableMod(), config::setEnableMod));
 
-        y += STEP;
-        addRenderableWidget(tip(CycleButton.onOffBuilder(config.isRenderWithCape())
-                        .create(cx - ROW_W / 2, y, ROW_W, ROW_H, TOMBServer.text("editor.under_cape"),
-                                (btn, val) -> config.setRenderWithCape(val)),
-                TOMBServer.text("editor.under_cape.tooltip")));
+        y += ROW_STEP;
+        addRenderableWidget(EditorWidgets.plainFlag(row(left, y), "editor.under_cape",
+                config.isRenderWithCape(), config::setRenderWithCape));
 
-        y += STEP;
-        addRenderableWidget(tip(CycleButton.onOffBuilder(config.isRenderWithElytra())
-                        .create(cx - ROW_W / 2, y, ROW_W, ROW_H, TOMBServer.text("editor.under_elytra"),
-                                (btn, val) -> config.setRenderWithElytra(val)),
-                TOMBServer.text("editor.under_elytra.tooltip")));
+        y += ROW_STEP;
+        addRenderableWidget(EditorWidgets.plainFlag(row(left, y), "editor.under_elytra",
+                config.isRenderWithElytra(), config::setRenderWithElytra));
 
-        y += STEP + 8;
-        addRenderableWidget(Button.builder(TOMBServer.text("editor.done"), b -> onClose())
-                .bounds(cx - ROW_W / 2, y, ROW_W, ROW_H).build());
+        y += ROW_STEP + 8;
+        addRenderableWidget(Button.builder(TOMBServer.text("editor.done"), ignored -> onClose())
+                .bounds(left, y, ROW_WIDTH, ROW_HEIGHT).build());
     }
 
-    private static <T extends AbstractWidget> T tip(T widget, Component text) {
-        widget.setTooltip(Tooltip.create(text));
-        widget.setTooltipDelay(Duration.ofMillis(500L));
-        return widget;
+    private static Slot row(int left, int y) {
+        return new Slot(left, y, ROW_WIDTH, ROW_HEIGHT);
     }
 
     @Override
     public void onClose() {
+        onLeave.run();
         TOMBClient.setScreen(parent);
     }
 }

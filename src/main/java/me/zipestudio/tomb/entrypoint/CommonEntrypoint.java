@@ -28,4 +28,21 @@ public class CommonEntrypoint {
 
 }
 
+*///?} elif forge {
+
+/*import me.zipestudio.tomb.TOMBServer;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.common.Mod;
+
+@Mod(TOMBServer.MOD_ID)
+public class CommonEntrypoint {
+
+	public CommonEntrypoint() {
+		TOMBServer.onInitialize();
+		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ClientEntrypoint::onInitializeClient);
+	}
+
+}
+
 *///?}

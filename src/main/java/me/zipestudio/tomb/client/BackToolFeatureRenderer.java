@@ -1,8 +1,6 @@
 package me.zipestudio.tomb.client;
 
 //? if >=1.21.11 {
-import me.zipestudio.tomb.config.ConfigHandler;
-import me.zipestudio.tomb.utils.interfaces.PlayerRenderStateWithParent;
 import net.minecraft.client.model.player.PlayerModel;
 //?} else {
 /*import net.minecraft.client.model.PlayerModel;
@@ -12,10 +10,7 @@ import net.minecraft.client.model.player.PlayerModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 //?} else if >=1.21.2 {
-/*import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.client.renderer.entity.state.PlayerRenderState;
+/*import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 import net.minecraft.client.renderer.MultiBufferSource;
 *///?} else {
 /*import net.minecraft.client.renderer.MultiBufferSource;
@@ -38,12 +33,9 @@ import me.zipestudio.tomb.config.ConfigHandler;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.PlayerItemInHandLayer;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.Nullable;
 
 public class BackToolFeatureRenderer
@@ -88,9 +80,6 @@ public class BackToolFeatureRenderer
         if (playerEntity == null) return;
 
         boolean preview = playerEntity.getUUID().equals(TOMBClient.PREVIEW_PLAYER) && !TOMBClient.PREVIEW_STACK.isEmpty();
-        // The editor's stand-in shows the previewed entry and nothing else. It borrows the real player's
-        // uuid to get their skin, so without this it falls through below and picks up whatever they are
-        // really carrying — which is what left an item on the doll after every entry had been deleted.
         if (!preview && playerEntity == TOMBClient.PREVIEW_DUMMY) return;
         ItemStack stack;
         if (preview) {
@@ -135,9 +124,6 @@ public class BackToolFeatureRenderer
         if (playerEntity == null) return;
 
         boolean preview = playerEntity.getUUID().equals(TOMBClient.PREVIEW_PLAYER) && !TOMBClient.PREVIEW_STACK.isEmpty();
-        // The editor's stand-in shows the previewed entry and nothing else. It borrows the real player's
-        // uuid to get their skin, so without this it falls through below and picks up whatever they are
-        // really carrying — which is what left an item on the doll after every entry had been deleted.
         if (!preview && playerEntity == TOMBClient.PREVIEW_DUMMY) return;
         ItemStack stack;
         if (preview) {
@@ -175,9 +161,6 @@ public class BackToolFeatureRenderer
         if (playerEntity == null) return;
 
         boolean preview = playerEntity.getUUID().equals(TOMBClient.PREVIEW_PLAYER) && !TOMBClient.PREVIEW_STACK.isEmpty();
-        // The editor's stand-in shows the previewed entry and nothing else. It borrows the real player's
-        // uuid to get their skin, so without this it falls through below and picks up whatever they are
-        // really carrying — which is what left an item on the doll after every entry had been deleted.
         if (!preview && playerEntity == TOMBClient.PREVIEW_DUMMY) return;
         ItemStack stack;
         if (preview) {
@@ -215,9 +198,6 @@ public class BackToolFeatureRenderer
         if (playerEntity == null) return;
 
         boolean preview = playerEntity.getUUID().equals(TOMBClient.PREVIEW_PLAYER) && !TOMBClient.PREVIEW_STACK.isEmpty();
-        // The editor's stand-in shows the previewed entry and nothing else. It borrows the real player's
-        // uuid to get their skin, so without this it falls through below and picks up whatever they are
-        // really carrying — which is what left an item on the doll after every entry had been deleted.
         if (!preview && playerEntity == TOMBClient.PREVIEW_DUMMY) return;
         ItemStack stack;
         if (preview) {
@@ -252,9 +232,6 @@ public class BackToolFeatureRenderer
     public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int light, AbstractClientPlayer playerEntity, float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks, float netHeadYaw, float headPitch) {
 
         boolean preview = playerEntity.getUUID().equals(TOMBClient.PREVIEW_PLAYER) && !TOMBClient.PREVIEW_STACK.isEmpty();
-        // The editor's stand-in shows the previewed entry and nothing else. It borrows the real player's
-        // uuid to get their skin, so without this it falls through below and picks up whatever they are
-        // really carrying — which is what left an item on the doll after every entry had been deleted.
         if (!preview && playerEntity == TOMBClient.PREVIEW_DUMMY) return;
 
         ItemStack stack;
@@ -264,9 +241,15 @@ public class BackToolFeatureRenderer
             HeldItemContext ctx = TOMBClient.HELD_TOOLS.get(playerEntity.getUUID());
             if (ctx == null || playerEntity.isInvisible()) return;
 
+            //? if >=1.21 {
             if (playerEntity.isModelPartShown(PlayerModelPart.CAPE) && playerEntity.getSkin().capeTexture() != null && !ConfigHandler.shouldRenderWithCape()) {
                 return;
             }
+            //?} else {
+            /^if (playerEntity.isModelPartShown(PlayerModelPart.CAPE) && playerEntity.getCloakTextureLocation() != null && !ConfigHandler.shouldRenderWithCape()) {
+                return;
+            }
+            ^///?}
 
             if (playerEntity.isSleeping()) return;
             if (shouldSkipRendering(playerEntity)) return;
@@ -310,10 +293,6 @@ public class BackToolFeatureRenderer
         float[] offset = ConfigHandler.getToolOffset(stack);
 
         matrices.scale(scale, scale, scale);
-        // Y is negated on the way in. This runs in the entity model's own space, where +Y points DOWN, so
-        // a positive offset used to sink the item and a negative one lifted it — backwards from what the
-        // slider reads. Flipping it here is the only place that has to know: the config, the editor and a
-        // shared profile all mean "+ is up" now.
         matrices.translate(offset[0], -offset[1], offset[2]);
 
         if (mainArm == HumanoidArm.RIGHT) {
@@ -322,26 +301,36 @@ public class BackToolFeatureRenderer
 
         if (ConfigHandler.shouldFlip(stack)) {
             if (mainArm == HumanoidArm.LEFT) {
-                matrices.mulPose(Axis.YP.rotationDegrees(180F));
-                matrices.mulPose(Axis.ZP.rotationDegrees(angleZ));
+                rotateDegrees(matrices, Axis.YP, 180F);
+                rotateDegrees(matrices, Axis.ZP, angleZ);
             } else {
-                matrices.mulPose(Axis.ZP.rotationDegrees(-angleZ));
+                rotateDegrees(matrices, Axis.ZP, -angleZ);
             }
         } else {
-            matrices.mulPose(Axis.ZP.rotationDegrees(angleZ));
+            rotateDegrees(matrices, Axis.ZP, angleZ);
         }
 
-        matrices.mulPose(Axis.XP.rotationDegrees(angleX));
-        matrices.mulPose(Axis.YP.rotationDegrees(angleY));
+        rotateDegrees(matrices, Axis.XP, angleX);
+        rotateDegrees(matrices, Axis.YP, angleY);
 
         //? if >=1.21.11 {
         if (stack.is(ItemTags.SPEARS)) {
             float yaw = (mainArm == HumanoidArm.LEFT) ? -90 : 90;
-            matrices.mulPose(Axis.YP.rotationDegrees(yaw));
-            matrices.mulPose(Axis.ZP.rotationDegrees((mainArm == HumanoidArm.LEFT) ? 1.6F : -1.6F));
+            rotateDegrees(matrices, Axis.YP, yaw);
+            rotateDegrees(matrices, Axis.ZP, (mainArm == HumanoidArm.LEFT) ? 1.6F : -1.6F);
         }
         //?}
-        //? if >=1.21.5 {
+        //? if >=26.3 {
+        /*if (!stack.isEmpty()) {
+            ItemDisplayContext displayContext = ConfigHandler.getDisplayContext(stack);
+            Player holder = ((PlayerRenderStateWithParent) state).tomb$getEntity();
+            ItemStackRenderState itemState = new ItemStackRenderState();
+            Minecraft.getInstance().getItemModelResolver().updateForTopItem(itemState, stack,
+                    displayContext, holder.level(), holder, holder.getId() + displayContext.ordinal());
+            itemState.submit(matrices, commandQueue, light,
+                    net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY, 0);
+        }
+        *///?} else if >=1.21.5 {
         Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer().renderItem(
                 ((PlayerRenderStateWithParent) state).tomb$getEntity(),
                 stack,
@@ -374,6 +363,14 @@ public class BackToolFeatureRenderer
         matrices.popPose();
     }
 
+    private static void rotateDegrees(PoseStack matrices, Axis axis, float degrees) {
+        //? if >=26.3 {
+        /*matrices.rotateDegrees(axis, degrees);
+        *///?} else {
+        matrices.mulPose(axis.rotationDegrees(degrees));
+        //?}
+    }
+
     //? if >=1.21.9 {
     private boolean shouldSkipRendering(AvatarRenderState player) {
         if (!ConfigHandler.isModEnabled()) return true;
@@ -399,6 +396,5 @@ public class BackToolFeatureRenderer
         return player.getItemBySlot(EquipmentSlot.CHEST).getItem() == Items.ELYTRA;
     }
     *///?}
-
 
 }

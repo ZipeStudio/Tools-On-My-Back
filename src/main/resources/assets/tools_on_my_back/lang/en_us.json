@@ -12,7 +12,8 @@
 	"${mod_id}.editor.section.rotation": "Rotation",
 	"${mod_id}.editor.section.position": "Position",
 
-	"${mod_id}.editor.hint.revert": "Right-click: restore the saved value",
+	"${mod_id}.editor.hint.revert": "Right-click: back to the saved value, then to the default",
+	"${mod_id}.editor.hint.unsupported": "Not available on this version of the game.",
 	"${mod_id}.editor.hint.no_world": "Join a world to see the preview.",
 	"${mod_id}.editor.hint.drag": "Drag: turn.\nWheel: zoom.\nRight-click: reset the view.",
 
@@ -63,7 +64,7 @@
 	"${mod_id}.editor.enabled": "Enabled",
 	"${mod_id}.editor.enabled.tooltip": "Show this item on the back.",
 	"${mod_id}.editor.flip": "Flip",
-	"${mod_id}.editor.flip.tooltip": "Turn the item to face the other way. On by default for shields, tridents and spears; a flat sprite looks the same either way.",
+	"${mod_id}.editor.flip.tooltip": "Keeps the item facing the same way whichever hand is your main one. Needed by models with a front and a back, so it is on by default for shields, tridents and spears. On a flat sprite it only mirrors the tilt.",
 	"${mod_id}.editor.display": "Display",
 	"${mod_id}.editor.display.tooltip": "Display context the item model is rendered with.",
 
@@ -116,6 +117,7 @@
 	"${mod_id}.editor.cancel_changes.tooltip": "Put every entry back to what is on disk. Entries added since the last save go with it.\nEsc closes the editor; this does not.",
 	"${mod_id}.editor.saved": "Config saved",
 	"${mod_id}.editor.cancel_changes.done": "Everything back to the last saved state",
+	"${mod_id}.editor.exit.unsaved": "Esc again to leave without saving",
 	"${mod_id}.editor.done": "Done",
 	"${mod_id}.editor.done.tooltip": "Everything is saved - close and go back."
 }

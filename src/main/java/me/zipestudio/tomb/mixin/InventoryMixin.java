@@ -25,7 +25,7 @@ public abstract class InventoryMixin {
     *///?}
 
     @Inject(at = @At("HEAD"), method = "removeFromSelected")
-    public void onSelected(boolean entireStack, CallbackInfoReturnable<ItemStack> cir) {
+    public void onSelected(boolean all, CallbackInfoReturnable<ItemStack> cir) {
 
         boolean isClient = player.level().isClientSide();
 

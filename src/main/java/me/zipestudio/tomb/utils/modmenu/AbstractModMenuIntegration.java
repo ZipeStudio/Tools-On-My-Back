@@ -6,7 +6,6 @@ import net.minecraft.client.gui.screens.Screen;
 
 public abstract class AbstractModMenuIntegration implements ModMenuApi {
 
-	// The mod's own editor is the config screen, so there is no config library to check for.
 	@Override
 	public ConfigScreenFactory<?> getModConfigScreenFactory() {
 		return this::createConfigScreen;
@@ -23,10 +22,26 @@ import net.minecraft.client.gui.screens.Screen;
 
 public abstract class AbstractModMenuIntegration {
 
-	// The mod's own editor is the config screen, so there is no config library to check for.
 	public void register(ModContainer container) {
 		container.registerExtensionPoint(IConfigScreenFactory.class,
 				(modContainer, parent) -> this.createConfigScreen(parent));
+	}
+
+	protected abstract Screen createConfigScreen(Screen parent);
+
+}
+
+*///?} elif forge {
+
+/*import net.minecraft.client.gui.screens.Screen;
+import net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory;
+import net.minecraftforge.fml.ModContainer;
+
+public abstract class AbstractModMenuIntegration {
+
+	public void register(ModContainer container) {
+		container.registerExtensionPoint(ConfigScreenFactory.class,
+				() -> new ConfigScreenFactory((minecraft, parent) -> this.createConfigScreen(parent)));
 	}
 
 	protected abstract Screen createConfigScreen(Screen parent);
