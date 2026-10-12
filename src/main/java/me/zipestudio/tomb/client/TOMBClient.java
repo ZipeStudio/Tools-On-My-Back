@@ -3,6 +3,7 @@ package me.zipestudio.tomb.client;
 import lombok.Getter;
 import me.zipestudio.tomb.TOMBServer;
 import me.zipestudio.tomb.config.ToolEntry;
+import me.zipestudio.tomb.utils.interfaces.RefreshableToast;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.toasts.SystemToast;
 import net.minecraft.client.gui.screens.Screen;
@@ -64,7 +65,7 @@ public class TOMBClient {
 		SystemToast showing = toasts.getToast(SystemToast.class, TOMB_PERIODIC_NOTIFICATION);
 		if (showing != null) {
 			if (!body.equals(lastToastBody)) {
-				((me.zipestudio.tomb.utils.interfaces.RefreshableToast) showing).tomb$replace(title, body);
+				((RefreshableToast) showing).tomb$replace(title, body);
 				lastToastBody = body;
 			}
 			return;
@@ -75,27 +76,27 @@ public class TOMBClient {
 		/*SystemToast showing = toasts.getToast(SystemToast.class, TOMB_PERIODIC_NOTIFICATION);
 		if (showing != null) {
 			if (!body.equals(lastToastBody)) {
-				((me.zipestudio.tomb.utils.interfaces.RefreshableToast) showing).tomb$replace(title, body);
+				((RefreshableToast) showing).tomb$replace(title, body);
 				lastToastBody = body;
 			}
 			return;
 		}
 		lastToastBody = body;
 		SystemToast fresh = SystemToast.multiline(Minecraft.getInstance(), TOMB_PERIODIC_NOTIFICATION, title, body);
-		((me.zipestudio.tomb.utils.interfaces.RefreshableToast) fresh).tomb$prepare(0L);
+		((RefreshableToast) fresh).tomb$prepare(0L);
 		toasts.addToast(fresh);
 		*///?} else {
 		/*SystemToast showing = toasts.getToast(SystemToast.class, TOMB_PERIODIC_NOTIFICATION);
 		if (showing != null) {
 			if (!body.equals(lastToastBody)) {
-				((me.zipestudio.tomb.utils.interfaces.RefreshableToast) showing).tomb$replace(title, body);
+				((RefreshableToast) showing).tomb$replace(title, body);
 				lastToastBody = body;
 			}
 			return;
 		}
 		lastToastBody = body;
 		SystemToast fresh = SystemToast.multiline(Minecraft.getInstance(), TOMB_PERIODIC_NOTIFICATION, title, body);
-		((me.zipestudio.tomb.utils.interfaces.RefreshableToast) fresh).tomb$prepare(TOAST_DISPLAY_MS);
+		((RefreshableToast) fresh).tomb$prepare(TOAST_DISPLAY_MS);
 		toasts.addToast(fresh);
 		*///?}
 	}

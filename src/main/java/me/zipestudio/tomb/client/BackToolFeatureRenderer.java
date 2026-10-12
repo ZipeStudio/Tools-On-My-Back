@@ -27,6 +27,7 @@ import net.minecraft.client.renderer.item.ItemStackRenderState;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import me.zipestudio.tomb.utils.PlayerAnimationUtils;
 import me.zipestudio.tomb.utils.interfaces.PlayerRenderStateWithParent;
 import net.minecraft.client.Minecraft;
 import me.zipestudio.tomb.config.ConfigHandler;
@@ -106,7 +107,7 @@ public class BackToolFeatureRenderer
                 ? 1.2F
                 : (state.showJacket ? 0.50F : 0.3F);
 
-        renderStack(state, poseStack, collector, light, state.mainArm, stack, chestOffset);
+        renderStack(state, playerEntity, poseStack, collector, light, state.mainArm, stack, chestOffset);
         poseStack.popPose();
     }
     //?} else if >=1.21.9 {
@@ -150,7 +151,7 @@ public class BackToolFeatureRenderer
                 ? 1.2F
                 : (state.showJacket ? 0.50F : 0.3F);
 
-        renderStack(state, poseStack, collector, light, state.mainArm, stack, chestOffset);
+        renderStack(state, playerEntity, poseStack, collector, light, state.mainArm, stack, chestOffset);
         poseStack.popPose();
     }
     *///?} else if >=1.21.4 {
@@ -187,7 +188,7 @@ public class BackToolFeatureRenderer
                 ? 1.2F
                 : (playerRenderState.showJacket ? 0.50F : 0.3F);
 
-        renderStack(playerRenderState, poseStack, multiBufferSource, i, playerRenderState.mainArm, stack, chestOffset);
+        renderStack(playerRenderState, playerEntity, poseStack, multiBufferSource, i, playerRenderState.mainArm, stack, chestOffset);
         poseStack.popPose();
     }
     *///?} else if >=1.21.2 {
@@ -224,7 +225,7 @@ public class BackToolFeatureRenderer
                 ? 1.2F
                 : (playerRenderState.showJacket ? 0.50F : 0.3F);
 
-        renderStack(playerRenderState, poseStack, multiBufferSource, i, playerRenderState.mainArm, stack, chestOffset);
+        renderStack(playerRenderState, playerEntity, poseStack, multiBufferSource, i, playerRenderState.mainArm, stack, chestOffset);
         poseStack.popPose();
     }
     *///?} else {
@@ -265,21 +266,23 @@ public class BackToolFeatureRenderer
                 ? 1.2F
                 : (playerEntity.isModelPartShown(PlayerModelPart.JACKET) ? 0.50F : 0.3F);
 
-        renderStack(playerEntity, poseStack, multiBufferSource, light, playerEntity.getMainArm(), stack, chestOffset);
+        renderStack(playerEntity, playerEntity, poseStack, multiBufferSource, light, playerEntity.getMainArm(), stack, chestOffset);
         poseStack.popPose();
     }
     *///?}
 
     //? if >=1.21.9 {
-    private void renderStack(AvatarRenderState state, PoseStack matrices, SubmitNodeCollector commandQueue,
+    private void renderStack(AvatarRenderState state, Player holder, PoseStack matrices, SubmitNodeCollector commandQueue,
                              int light, HumanoidArm mainArm, ItemStack stack, float chestOffset) {
         //?} else if >=1.21.2 {
-    /*private void renderStack(PlayerRenderState state, PoseStack matrices, MultiBufferSource commandQueue,
+    /*private void renderStack(PlayerRenderState state, Player holder, PoseStack matrices, MultiBufferSource commandQueue,
                              int light, HumanoidArm mainArm, ItemStack stack, float chestOffset) {
     *///?} else {
-    /*private void renderStack(AbstractClientPlayer state, PoseStack matrices, MultiBufferSource commandQueue,
+    /*private void renderStack(AbstractClientPlayer state, Player holder, PoseStack matrices, MultiBufferSource commandQueue,
                              int light, HumanoidArm mainArm, ItemStack stack, float chestOffset) {
     *///?}
+
+        if (hiddenInFirstPerson(holder)) return;
 
         matrices.pushPose();
 
@@ -323,7 +326,6 @@ public class BackToolFeatureRenderer
         //? if >=26.3 {
         if (!stack.isEmpty()) {
             ItemDisplayContext displayContext = ConfigHandler.getDisplayContext(stack);
-            Player holder = ((PlayerRenderStateWithParent) state).tomb$getEntity();
             ItemStackRenderState itemState = new ItemStackRenderState();
             Minecraft.getInstance().getItemModelResolver().updateForTopItem(itemState, stack,
                     displayContext, holder.level(), holder, holder.getId() + displayContext.ordinal());
@@ -361,6 +363,14 @@ public class BackToolFeatureRenderer
         );
         *///?}
         matrices.popPose();
+    }
+
+    private static boolean hiddenInFirstPerson(Player holder) {
+        Minecraft minecraft = Minecraft.getInstance();
+        if (holder != minecraft.getCameraEntity()) return false;
+        if (!minecraft.options.getCameraType().isFirstPerson()) return false;
+        if (PlayerAnimationUtils.animating(holder)) return true;
+        return !ConfigHandler.shouldRenderInFirstPerson();
     }
 
     private static void rotateDegrees(PoseStack matrices, Axis axis, float degrees) {

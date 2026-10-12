@@ -4,6 +4,7 @@ import com.mojang.authlib.GameProfile;
 import me.zipestudio.tomb.TOMBServer;
 import me.zipestudio.tomb.client.TOMBClient;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.CycleButton;
@@ -199,7 +200,7 @@ public final class PreviewPanel {
 
     private final class PreviewDummy extends RemotePlayer {
 
-        private PreviewDummy(net.minecraft.client.multiplayer.ClientLevel level, GameProfile profile) {
+        private PreviewDummy(ClientLevel level, GameProfile profile) {
             super(level, profile);
         }
 

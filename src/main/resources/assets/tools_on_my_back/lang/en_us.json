@@ -44,10 +44,12 @@
 
 	"${mod_id}.editor.mod_enabled": "Mod",
 	"${mod_id}.editor.mod_enabled.tooltip": "Turns the mod on and off. Off means nothing is shown on anyone.",
-	"${mod_id}.editor.under_cape": "Under cape",
-	"${mod_id}.editor.under_cape.tooltip": "Draw the item under the cape rather than over it.",
-	"${mod_id}.editor.under_elytra": "Under elytra",
-	"${mod_id}.editor.under_elytra.tooltip": "Draw the item under the elytra rather than over it.",
+	"${mod_id}.editor.with_cape": "With cape",
+	"${mod_id}.editor.with_cape.tooltip": "Show the item when a cape is visible.",
+	"${mod_id}.editor.with_elytra": "With elytra",
+	"${mod_id}.editor.with_elytra.tooltip": "Show the item when an elytra is equipped.",
+	"${mod_id}.editor.first_person": "In first person",
+	"${mod_id}.editor.first_person.tooltip": "Draw your own items while in first person. Only matters with mods that show your body there; the item can swing into view during their animations.",
 
 	"${mod_id}.editor.item_id": "itemId",
 	"${mod_id}.editor.item_id.hint": "minecraft:diamond_sword",

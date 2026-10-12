@@ -8,6 +8,15 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+//? if >=1.21.4 {
+import net.minecraft.client.gui.components.toasts.ToastManager;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+//?} else {
+/*import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.toasts.Toast;
+import net.minecraft.client.gui.components.toasts.ToastComponent;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+*///?}
 //? if <26.2 {
 /*import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -121,17 +130,13 @@ public class SystemToastMixin implements RefreshableToast {
 
     //? if >=1.21.4 {
     @Inject(at = @At("HEAD"), method = "update")
-    public void onUpdate(net.minecraft.client.gui.components.toasts.ToastManager p_364721_, long p_364544_,
-                         org.spongepowered.asm.mixin.injection.callback.CallbackInfo ci) {
-        tomb$step(p_364721_.getNotificationDisplayTimeMultiplier());
+    public void onUpdate(ToastManager manager, long fullyVisibleForMs, CallbackInfo ci) {
+        tomb$step(manager.getNotificationDisplayTimeMultiplier());
     }
     //?} else {
     /*@Inject(at = @At("HEAD"), method = "render")
-    public void onRender(net.minecraft.client.gui.GuiGraphics guiGraphics,
-                         net.minecraft.client.gui.components.toasts.ToastComponent toastComponent,
-                         long timeSinceLastVisible,
-                         org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<
-                                 net.minecraft.client.gui.components.toasts.Toast.Visibility> cir) {
+    public void onRender(GuiGraphics guiGraphics, ToastComponent toastComponent, long timeSinceLastVisible,
+                         CallbackInfoReturnable<Toast.Visibility> cir) {
         tomb$step(toastComponent.getNotificationDisplayTimeMultiplier());
     }
     *///?}

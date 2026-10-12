@@ -38,11 +38,15 @@ public class ModSettingsScreen extends Screen {
                 config.isEnableMod(), config::setEnableMod));
 
         y += ROW_STEP;
-        addRenderableWidget(EditorWidgets.plainFlag(row(left, y), "editor.under_cape",
+        addRenderableWidget(EditorWidgets.plainFlag(row(left, y), "editor.first_person",
+                config.isRenderInFirstPerson(), config::setRenderInFirstPerson));
+
+        y += ROW_STEP;
+        addRenderableWidget(EditorWidgets.plainFlag(row(left, y), "editor.with_cape",
                 config.isRenderWithCape(), config::setRenderWithCape));
 
         y += ROW_STEP;
-        addRenderableWidget(EditorWidgets.plainFlag(row(left, y), "editor.under_elytra",
+        addRenderableWidget(EditorWidgets.plainFlag(row(left, y), "editor.with_elytra",
                 config.isRenderWithElytra(), config::setRenderWithElytra));
 
         y += ROW_STEP + 8;

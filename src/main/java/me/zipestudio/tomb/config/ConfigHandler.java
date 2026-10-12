@@ -283,6 +283,10 @@ public class ConfigHandler {
         return leafyConfig.isRenderWithCape();
     }
 
+    public static boolean shouldRenderInFirstPerson() {
+        return leafyConfig.isRenderInFirstPerson();
+    }
+
     public static boolean shouldRenderWithElytra() {
         return leafyConfig.isRenderWithElytra();
     }

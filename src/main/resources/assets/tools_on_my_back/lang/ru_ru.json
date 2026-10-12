@@ -44,10 +44,12 @@
 
 	"${mod_id}.editor.mod_enabled": "Мод",
 	"${mod_id}.editor.mod_enabled.tooltip": "Включает и выключает мод. Выключено — на спине ни у кого ничего нет.",
-	"${mod_id}.editor.under_cape": "Под плащом",
-	"${mod_id}.editor.under_cape.tooltip": "Рисовать предмет под плащом, а не поверх него.",
-	"${mod_id}.editor.under_elytra": "Под элитрами",
-	"${mod_id}.editor.under_elytra.tooltip": "Рисовать предмет под элитрами, а не поверх них.",
+	"${mod_id}.editor.with_cape": "С плащом",
+	"${mod_id}.editor.with_cape.tooltip": "Показывать предмет, когда виден плащ.",
+	"${mod_id}.editor.with_elytra": "С элитрами",
+	"${mod_id}.editor.with_elytra.tooltip": "Показывать предмет, когда надеты элитры.",
+	"${mod_id}.editor.first_person": "От первого лица",
+	"${mod_id}.editor.first_person.tooltip": "Рисовать свои предметы от первого лица. Имеет смысл только с модами, показывающими ваше тело; во время их анимаций предмет может заезжать в кадр.",
 
 	"${mod_id}.editor.item_id": "itemId",
 	"${mod_id}.editor.item_id.hint": "minecraft:diamond_sword",

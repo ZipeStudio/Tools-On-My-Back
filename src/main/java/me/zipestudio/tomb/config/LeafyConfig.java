@@ -43,13 +43,14 @@ public class LeafyConfig {
 
 	public static final Codec<LeafyConfig> CODEC = RecordCodecBuilder.create(instance -> instance.group(
 			option("enableMod", true, Codec.BOOL, LeafyConfig::isEnableMod),
+			option("renderInFirstPerson", true, Codec.BOOL, LeafyConfig::isRenderInFirstPerson),
 			option("renderWithCape", true, Codec.BOOL, LeafyConfig::isRenderWithCape),
 			option("renderWithElytra", true, Codec.BOOL, LeafyConfig::isRenderWithElytra),
 			Codec.list(TOOL_ENTRY_CODEC).fieldOf("tools").orElse(new ArrayList<>()).forGetter(LeafyConfig::getTools)
 	).apply(instance, LeafyConfig::new));
 
 	public static final List<String> KEY_ORDER = List.of(
-			"enableMod", "renderWithCape", "renderWithElytra", "tools",
+			"enableMod", "renderInFirstPerson", "renderWithCape", "renderWithElytra", "tools",
 			"itemId", "components", "matchName", "matchModelData", "matchItemModel", "applyToSimilar",
 			"enabled", "flip", "displayContext",
 			"scale", "angleX", "angleY", "angleZ", "offsetX", "offsetY", "offsetZ");
@@ -60,6 +61,7 @@ public class LeafyConfig {
 	private static LeafyConfig INSTANCE;
 
 	private boolean enableMod;
+	private boolean renderInFirstPerson;
 	private boolean renderWithCape;
 	private boolean renderWithElytra;
 	private List<ToolEntry> tools;
