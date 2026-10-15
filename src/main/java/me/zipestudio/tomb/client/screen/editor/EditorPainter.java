@@ -174,7 +174,7 @@ public final class EditorPainter {
         }
     }
 
-    public void scrollingText(Component label, Font font, int left, int top, int right, int bottom,
+    public void scrollingText(Component label, int left, int top, int right, int bottom,
                               int textY, int colour) {
         int overflow = font.width(label) - (right - left);
         if (overflow <= 0) {

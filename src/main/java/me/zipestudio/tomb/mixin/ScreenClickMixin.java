@@ -16,8 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class ScreenClickMixin {
 
     @Inject(method = "clickCommandAction", at = @At("HEAD"), cancellable = true)
-    private static void tomb$profileClick(LocalPlayer player, String command,
-                                          Screen screen, CallbackInfo ci) {
+    private static void tomb$profileClick(LocalPlayer player, String command, Screen screenAfterCommand, CallbackInfo ci) {
         if (ProfileShare.handleClick(command)) ci.cancel();
     }
 }

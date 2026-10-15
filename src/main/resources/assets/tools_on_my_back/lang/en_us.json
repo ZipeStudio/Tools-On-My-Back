@@ -55,8 +55,10 @@
 	"${mod_id}.editor.item_id.hint": "minecraft:diamond_sword",
 	"${mod_id}.editor.item_id.tooltip": "Item id this entry applies to.",
 
-	"${mod_id}.editor.apply_to_similar": "Apply to all similar",
-	"${mod_id}.editor.apply_to_similar.tooltip": "ON: use this config for every item of the same type - all swords, all axes, modded included.",
+	"${mod_id}.editor.apply_to_similar": "Apply to",
+	"${mod_id}.editor.apply_to_similar.tooltip": "Which items get these settings: this one alone, every item of the same type, one of its tags, or the whole mod.",
+	"${mod_id}.editor.scope.item": "This item",
+	"${mod_id}.editor.scope.similar": "Similar items",
 	"${mod_id}.editor.match_name": "Name",
 	"${mod_id}.editor.match_name.tooltip": "Match only items renamed exactly like this one.\nNone ticked = any variant of the item.",
 	"${mod_id}.editor.match_model_data": "CMD",

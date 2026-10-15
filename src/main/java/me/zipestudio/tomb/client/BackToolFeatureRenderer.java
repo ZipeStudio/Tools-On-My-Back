@@ -49,20 +49,20 @@ public class BackToolFeatureRenderer
 *///?}
 
     //? if >=1.21.9 {
-    public BackToolFeatureRenderer(RenderLayerParent<AvatarRenderState, M> context) {
-        super(context);
+    public BackToolFeatureRenderer(RenderLayerParent<AvatarRenderState, M> renderer) {
+        super(renderer);
     }
     //?} else if >=1.21.4 {
-    /*public BackToolFeatureRenderer(RenderLayerParent<PlayerRenderState, M> context) {
-        super(context);
+    /*public BackToolFeatureRenderer(RenderLayerParent<PlayerRenderState, M> renderer) {
+        super(renderer);
     }
     *///?} else if >=1.21.2 {
-    /*public BackToolFeatureRenderer(RenderLayerParent<PlayerRenderState, M> context) {
-        super(context, Minecraft.getInstance().getItemRenderer());
+    /*public BackToolFeatureRenderer(RenderLayerParent<PlayerRenderState, M> renderer) {
+        super(renderer, Minecraft.getInstance().getItemRenderer());
     }
     *///?} else {
-    /*public BackToolFeatureRenderer(RenderLayerParent<AbstractClientPlayer, M> context) {
-        super(context, Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer());
+    /*public BackToolFeatureRenderer(RenderLayerParent<AbstractClientPlayer, M> renderer) {
+        super(renderer, Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer());
     }
     *///?}
 
@@ -70,12 +70,12 @@ public class BackToolFeatureRenderer
     @Override
     protected void submitArmWithItem(
             AvatarRenderState state,
-            ItemStackRenderState itemState,
+            ItemStackRenderState item,
             ItemStack itemStack,
             HumanoidArm arm,
             PoseStack poseStack,
-            SubmitNodeCollector collector,
-            int light
+            SubmitNodeCollector submitNodeCollector,
+            int lightCoords
     ) {
         Player playerEntity = ((PlayerRenderStateWithParent) state).tomb$getEntity();
         if (playerEntity == null) return;
@@ -107,21 +107,21 @@ public class BackToolFeatureRenderer
                 ? 1.2F
                 : (state.showJacket ? 0.50F : 0.3F);
 
-        renderStack(state, playerEntity, poseStack, collector, light, state.mainArm, stack, chestOffset);
+        renderStack(state, playerEntity, poseStack, submitNodeCollector, lightCoords, state.mainArm, stack, chestOffset);
         poseStack.popPose();
     }
     //?} else if >=1.21.9 {
     /*@Override
     protected void submitArmWithItem(
-            AvatarRenderState state,
-            ItemStackRenderState itemState,
+            AvatarRenderState renderState,
+            ItemStackRenderState stackRenderState,
             HumanoidArm arm,
             PoseStack poseStack,
-            SubmitNodeCollector collector,
-            int light
+            SubmitNodeCollector nodeCollector,
+            int packedLight
     ) {
 
-        Player playerEntity = ((PlayerRenderStateWithParent) state).tomb$getEntity();
+        Player playerEntity = ((PlayerRenderStateWithParent) renderState).tomb$getEntity();
         if (playerEntity == null) return;
 
         boolean preview = playerEntity.getUUID().equals(TOMBClient.PREVIEW_PLAYER) && !TOMBClient.PREVIEW_STACK.isEmpty();
@@ -131,14 +131,14 @@ public class BackToolFeatureRenderer
             stack = TOMBClient.PREVIEW_STACK;
         } else {
             HeldItemContext ctx = TOMBClient.HELD_TOOLS.get(playerEntity.getUUID());
-            if (ctx == null || state.isInvisible) return;
+            if (ctx == null || renderState.isInvisible) return;
 
-            if (state.showCape && state.skin.cape() != null && !ConfigHandler.shouldRenderWithCape()) {
+            if (renderState.showCape && renderState.skin.cape() != null && !ConfigHandler.shouldRenderWithCape()) {
                 return;
             }
 
-            if (state.bedOrientation != null) return;
-            if (shouldSkipRendering(state)) return;
+            if (renderState.bedOrientation != null) return;
+            if (shouldSkipRendering(renderState)) return;
 
             stack = ctx.previousMain;
         }
@@ -147,18 +147,18 @@ public class BackToolFeatureRenderer
         poseStack.pushPose();
         this.getParentModel().body.translateAndRotate(poseStack);
 
-        float chestOffset = !state.chestEquipment.isEmpty()
+        float chestOffset = !renderState.chestEquipment.isEmpty()
                 ? 1.2F
-                : (state.showJacket ? 0.50F : 0.3F);
+                : (renderState.showJacket ? 0.50F : 0.3F);
 
-        renderStack(state, playerEntity, poseStack, collector, light, state.mainArm, stack, chestOffset);
+        renderStack(renderState, playerEntity, poseStack, nodeCollector, packedLight, renderState.mainArm, stack, chestOffset);
         poseStack.popPose();
     }
     *///?} else if >=1.21.4 {
     /*@Override
-    public void renderArmWithItem(PlayerRenderState playerRenderState, ItemStackRenderState itemStackRenderState, HumanoidArm humanoidArm, PoseStack poseStack, MultiBufferSource multiBufferSource, int i) {
+    public void renderArmWithItem(PlayerRenderState renderState, ItemStackRenderState itemStackRenderState, HumanoidArm arm, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
 
-        Player playerEntity = ((PlayerRenderStateWithParent) playerRenderState).tomb$getEntity();
+        Player playerEntity = ((PlayerRenderStateWithParent) renderState).tomb$getEntity();
         if (playerEntity == null) return;
 
         boolean preview = playerEntity.getUUID().equals(TOMBClient.PREVIEW_PLAYER) && !TOMBClient.PREVIEW_STACK.isEmpty();
@@ -168,14 +168,14 @@ public class BackToolFeatureRenderer
             stack = TOMBClient.PREVIEW_STACK;
         } else {
             HeldItemContext ctx = TOMBClient.HELD_TOOLS.get(playerEntity.getUUID());
-            if (ctx == null || playerRenderState.isInvisible) return;
+            if (ctx == null || renderState.isInvisible) return;
 
-            if (playerRenderState.showCape && playerRenderState.skin.capeTexture() != null && !ConfigHandler.shouldRenderWithCape()) {
+            if (renderState.showCape && renderState.skin.capeTexture() != null && !ConfigHandler.shouldRenderWithCape()) {
                 return;
             }
 
-            if (playerRenderState.bedOrientation != null) return;
-            if (shouldSkipRendering(playerRenderState)) return;
+            if (renderState.bedOrientation != null) return;
+            if (shouldSkipRendering(renderState)) return;
 
             stack = ctx.previousMain;
         }
@@ -184,18 +184,18 @@ public class BackToolFeatureRenderer
         poseStack.pushPose();
         this.getParentModel().body.translateAndRotate(poseStack);
 
-        float chestOffset = !playerRenderState.chestEquipment.isEmpty()
+        float chestOffset = !renderState.chestEquipment.isEmpty()
                 ? 1.2F
-                : (playerRenderState.showJacket ? 0.50F : 0.3F);
+                : (renderState.showJacket ? 0.50F : 0.3F);
 
-        renderStack(playerRenderState, playerEntity, poseStack, multiBufferSource, i, playerRenderState.mainArm, stack, chestOffset);
+        renderStack(renderState, playerEntity, poseStack, bufferSource, packedLight, renderState.mainArm, stack, chestOffset);
         poseStack.popPose();
     }
     *///?} else if >=1.21.2 {
     /*@Override
-    public void renderArmWithItem(PlayerRenderState playerRenderState, @Nullable BakedModel bakedModel, ItemStack itemStack, ItemDisplayContext itemDisplayContext, HumanoidArm humanoidArm, PoseStack poseStack, MultiBufferSource multiBufferSource, int i) {
+    public void renderArmWithItem(PlayerRenderState renderState, @Nullable BakedModel itemModel, ItemStack item, ItemDisplayContext displayContext, HumanoidArm arm, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
 
-        Player playerEntity = ((PlayerRenderStateWithParent) playerRenderState).tomb$getEntity();
+        Player playerEntity = ((PlayerRenderStateWithParent) renderState).tomb$getEntity();
         if (playerEntity == null) return;
 
         boolean preview = playerEntity.getUUID().equals(TOMBClient.PREVIEW_PLAYER) && !TOMBClient.PREVIEW_STACK.isEmpty();
@@ -205,14 +205,14 @@ public class BackToolFeatureRenderer
             stack = TOMBClient.PREVIEW_STACK;
         } else {
             HeldItemContext ctx = TOMBClient.HELD_TOOLS.get(playerEntity.getUUID());
-            if (ctx == null || playerRenderState.isInvisible) return;
+            if (ctx == null || renderState.isInvisible) return;
 
-            if (playerRenderState.showCape && playerRenderState.skin.capeTexture() != null && !ConfigHandler.shouldRenderWithCape()) {
+            if (renderState.showCape && renderState.skin.capeTexture() != null && !ConfigHandler.shouldRenderWithCape()) {
                 return;
             }
 
-            if (playerRenderState.bedOrientation != null) return;
-            if (shouldSkipRendering(playerRenderState)) return;
+            if (renderState.bedOrientation != null) return;
+            if (shouldSkipRendering(renderState)) return;
 
             stack = ctx.previousMain;
         }
@@ -221,39 +221,39 @@ public class BackToolFeatureRenderer
         poseStack.pushPose();
         this.getParentModel().body.translateAndRotate(poseStack);
 
-        float chestOffset = !playerRenderState.chestItem.isEmpty()
+        float chestOffset = !renderState.chestItem.isEmpty()
                 ? 1.2F
-                : (playerRenderState.showJacket ? 0.50F : 0.3F);
+                : (renderState.showJacket ? 0.50F : 0.3F);
 
-        renderStack(playerRenderState, playerEntity, poseStack, multiBufferSource, i, playerRenderState.mainArm, stack, chestOffset);
+        renderStack(renderState, playerEntity, poseStack, bufferSource, packedLight, renderState.mainArm, stack, chestOffset);
         poseStack.popPose();
     }
     *///?} else {
     /*@Override
-    public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int light, AbstractClientPlayer playerEntity, float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, AbstractClientPlayer livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
 
-        boolean preview = playerEntity.getUUID().equals(TOMBClient.PREVIEW_PLAYER) && !TOMBClient.PREVIEW_STACK.isEmpty();
-        if (!preview && playerEntity == TOMBClient.PREVIEW_DUMMY) return;
+        boolean preview = livingEntity.getUUID().equals(TOMBClient.PREVIEW_PLAYER) && !TOMBClient.PREVIEW_STACK.isEmpty();
+        if (!preview && livingEntity == TOMBClient.PREVIEW_DUMMY) return;
 
         ItemStack stack;
         if (preview) {
             stack = TOMBClient.PREVIEW_STACK;
         } else {
-            HeldItemContext ctx = TOMBClient.HELD_TOOLS.get(playerEntity.getUUID());
-            if (ctx == null || playerEntity.isInvisible()) return;
+            HeldItemContext ctx = TOMBClient.HELD_TOOLS.get(livingEntity.getUUID());
+            if (ctx == null || livingEntity.isInvisible()) return;
 
             //? if >=1.21 {
-            if (playerEntity.isModelPartShown(PlayerModelPart.CAPE) && playerEntity.getSkin().capeTexture() != null && !ConfigHandler.shouldRenderWithCape()) {
+            if (livingEntity.isModelPartShown(PlayerModelPart.CAPE) && livingEntity.getSkin().capeTexture() != null && !ConfigHandler.shouldRenderWithCape()) {
                 return;
             }
             //?} else {
-            /^if (playerEntity.isModelPartShown(PlayerModelPart.CAPE) && playerEntity.getCloakTextureLocation() != null && !ConfigHandler.shouldRenderWithCape()) {
+            /^if (livingEntity.isModelPartShown(PlayerModelPart.CAPE) && livingEntity.getCloakTextureLocation() != null && !ConfigHandler.shouldRenderWithCape()) {
                 return;
             }
             ^///?}
 
-            if (playerEntity.isSleeping()) return;
-            if (shouldSkipRendering(playerEntity)) return;
+            if (livingEntity.isSleeping()) return;
+            if (shouldSkipRendering(livingEntity)) return;
 
             stack = ctx.previousMain;
         }
@@ -262,11 +262,11 @@ public class BackToolFeatureRenderer
         poseStack.pushPose();
         this.getParentModel().body.translateAndRotate(poseStack);
 
-        float chestOffset = !playerEntity.getItemBySlot(EquipmentSlot.CHEST).isEmpty()
+        float chestOffset = !livingEntity.getItemBySlot(EquipmentSlot.CHEST).isEmpty()
                 ? 1.2F
-                : (playerEntity.isModelPartShown(PlayerModelPart.JACKET) ? 0.50F : 0.3F);
+                : (livingEntity.isModelPartShown(PlayerModelPart.JACKET) ? 0.50F : 0.3F);
 
-        renderStack(playerEntity, playerEntity, poseStack, multiBufferSource, light, playerEntity.getMainArm(), stack, chestOffset);
+        renderStack(livingEntity, livingEntity, poseStack, buffer, packedLight, livingEntity.getMainArm(), stack, chestOffset);
         poseStack.popPose();
     }
     *///?}

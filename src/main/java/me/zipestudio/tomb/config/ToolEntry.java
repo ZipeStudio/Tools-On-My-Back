@@ -19,7 +19,7 @@ public class ToolEntry {
     private boolean matchName;
     private boolean matchModelData;
     private boolean matchItemModel;
-    private boolean applyToSimilar;
+    private String scope = "";
 
     private boolean enabled = true;
     private boolean flip;
@@ -37,7 +37,7 @@ public class ToolEntry {
 
 
     public ToolEntry() {
-        this("minecraft:diamond_sword", "", false, false, false, false, true, false, DEFAULT_DISPLAY_CONTEXT,
+        this("minecraft:diamond_sword", "", false, false, false, "", true, false, DEFAULT_DISPLAY_CONTEXT,
                 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
     }
 
@@ -71,16 +71,8 @@ public class ToolEntry {
         Identifier id = Identifier.tryParse(itemId);
         if (id == null) return false;
 
-        if (applyToSimilar) {
-            //? if >=1.21.2 {
-            String category = ConfigHandler.detectCategory(BuiltInRegistries.ITEM.getValue(id).getDefaultInstance());
-            //?} else {
-            /*String category = ConfigHandler.detectCategory(BuiltInRegistries.ITEM.get(id).getDefaultInstance());
-            *///?}
-            boolean inScope = !category.isEmpty()
-                    ? ConfigHandler.matchesType(stack, category)
-                    : id.equals(BuiltInRegistries.ITEM.getKey(stack.getItem()));
-            return inScope && ConfigHandler.componentsMatch(stack, this);
+        if (scope != null && !scope.isEmpty()) {
+            return ConfigHandler.inScope(stack, id, scope) && ConfigHandler.componentsMatch(stack, this);
         }
 
         if (!id.equals(BuiltInRegistries.ITEM.getKey(stack.getItem()))) return false;

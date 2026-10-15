@@ -16,9 +16,7 @@ public abstract class PlayerTickMixin {
     public void tick(CallbackInfo ci) {
 
         final Player player = (Player) (Object) this;
-
         boolean isClient = player.level().isClientSide();
-
         if (!isClient) return;
 
         UUID uuid = player.getUUID();
@@ -28,7 +26,7 @@ public abstract class PlayerTickMixin {
             final HeldItemContext ctx = TOMBClient.HELD_TOOLS.computeIfAbsent(
                     uuid, v -> new HeldItemContext()
             );
-            ctx.tick(player.getMainHandItem().copy());
+            ctx.tick(player.getMainHandItem().copy(), player.getOffhandItem().copy());
         }
     }
 

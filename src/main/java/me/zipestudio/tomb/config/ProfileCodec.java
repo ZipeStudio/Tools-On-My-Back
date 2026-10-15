@@ -39,7 +39,7 @@ public final class ProfileCodec {
         flag(sb, "n", entry.isMatchName(), def.isMatchName());
         flag(sb, "m", entry.isMatchModelData(), def.isMatchModelData());
         flag(sb, "i", entry.isMatchItemModel(), def.isMatchItemModel());
-        flag(sb, "a", entry.isApplyToSimilar(), def.isApplyToSimilar());
+        if (!entry.getScope().equals(def.getScope())) put(sb, "a", entry.getScope());
         flag(sb, "e", entry.isEnabled(), def.isEnabled());
         flag(sb, "f", entry.isFlip(), def.isFlip());
 
@@ -56,6 +56,13 @@ public final class ProfileCodec {
         number(sb, "oz", entry.getOffsetZ(), def.getOffsetZ());
 
         return sb.append(CLOSE).toString();
+    }
+
+    private static String scope(String value) {
+        String text = value.trim();
+        if (text.equals("1") || text.equalsIgnoreCase("true")) return "similar";
+        if (text.equals("0") || text.equalsIgnoreCase("false")) return "";
+        return text;
     }
 
     public static ToolEntry decode(String text) {
@@ -81,7 +88,7 @@ public final class ProfileCodec {
                 case "n" -> entry.setMatchName(bool(value));
                 case "m" -> entry.setMatchModelData(bool(value));
                 case "i" -> entry.setMatchItemModel(bool(value));
-                case "a" -> entry.setApplyToSimilar(bool(value));
+                case "a" -> entry.setScope(scope(value));
                 case "e" -> entry.setEnabled(bool(value));
                 case "f" -> entry.setFlip(bool(value));
                 case "x" -> entry.setDisplayContext(value);

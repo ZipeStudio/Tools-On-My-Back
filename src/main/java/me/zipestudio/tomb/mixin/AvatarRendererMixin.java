@@ -19,7 +19,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 //? if >=1.21.9 {
 
 //? if >=1.21.11 {
-import net.minecraft.client.model.player.PlayerModel;
 //?} else {
 /*import net.minecraft.client.model.PlayerModel;
 *///?}
@@ -32,13 +31,13 @@ public abstract class AvatarRendererMixin
         <T extends AbstractClientPlayer, S extends AvatarRenderState, M extends PlayerModel>
         extends LivingEntityRenderer<T, S, M> {
 
-    public AvatarRendererMixin(EntityRendererProvider.Context ctx, M model, float shadowRadius) {
-        super(ctx, model, shadowRadius);
+    public AvatarRendererMixin(EntityRendererProvider.Context context, M model, float shadow) {
+        super(context, model, shadow);
     }
 
     @SuppressWarnings("unsafe")
     @Inject(method = "<init>", at = @At("TAIL"))
-    private void addBackToolFeature(EntityRendererProvider.Context ctx, boolean slim, CallbackInfo ci) {
+    private void addBackToolFeature(EntityRendererProvider.Context context, boolean isSlim, CallbackInfo ci) {
         this.addLayer(new BackToolFeatureRenderer(this));
     }
 
@@ -47,8 +46,8 @@ public abstract class AvatarRendererMixin
             method = "extractRenderState(Lnet/minecraft/world/entity/Avatar;Lnet/minecraft/client/renderer/entity/state/AvatarRenderState;F)V",
             at = @At("HEAD")
     )
-    private void injectRenderState(Avatar avatar, AvatarRenderState state, float tickDelta, CallbackInfo ci) {
-        if (!(avatar instanceof AbstractClientPlayer player)) return;
+    private void injectRenderState(Avatar entity, AvatarRenderState state, float partialTicks, CallbackInfo ci) {
+        if (!(entity instanceof AbstractClientPlayer player)) return;
         ((PlayerRenderStateWithParent) state).tomb$setEntity(player);
     }
 
@@ -62,13 +61,13 @@ public abstract class AvatarRendererMixin
         <T extends AbstractClientPlayer, S extends PlayerRenderState, M extends PlayerModel>
         extends LivingEntityRenderer<T, S, M> {
 
-    public AvatarRendererMixin(EntityRendererProvider.Context ctx, M model, float shadowRadius) {
-        super(ctx, model, shadowRadius);
+    public AvatarRendererMixin(EntityRendererProvider.Context context, M model, float shadowRadius) {
+        super(context, model, shadowRadius);
     }
 
     @SuppressWarnings("unsafe")
     @Inject(method = "<init>", at = @At("TAIL"))
-    private void addBackToolFeature(EntityRendererProvider.Context ctx, boolean slim, CallbackInfo ci) {
+    private void addBackToolFeature(EntityRendererProvider.Context context, boolean isSlim, CallbackInfo ci) {
         this.addLayer(new BackToolFeatureRenderer(this));
     }
 
@@ -77,8 +76,8 @@ public abstract class AvatarRendererMixin
             method = "extractRenderState(Lnet/minecraft/client/player/AbstractClientPlayer;Lnet/minecraft/client/renderer/entity/state/PlayerRenderState;F)V",
             at = @At("HEAD")
     )
-    private void injectRenderState(AbstractClientPlayer abstractClientPlayer, PlayerRenderState state, float f, CallbackInfo ci) {
-        ((PlayerRenderStateWithParent) state).tomb$setEntity(abstractClientPlayer);
+    private void injectRenderState(AbstractClientPlayer entity, PlayerRenderState reusedState, float partialTick, CallbackInfo ci) {
+        ((PlayerRenderStateWithParent) reusedState).tomb$setEntity(entity);
     }
 
 }
@@ -89,13 +88,13 @@ public abstract class AvatarRendererMixin
 public abstract class AvatarRendererMixin
         extends LivingEntityRenderer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 
-    public AvatarRendererMixin(EntityRendererProvider.Context ctx, PlayerModel<AbstractClientPlayer> model, float shadowRadius) {
-        super(ctx, model, shadowRadius);
+    public AvatarRendererMixin(EntityRendererProvider.Context context, PlayerModel<AbstractClientPlayer> model, float shadowRadius) {
+        super(context, model, shadowRadius);
     }
 
     @SuppressWarnings("unsafe")
     @Inject(method = "<init>", at = @At("TAIL"))
-    private void addBackToolFeature(EntityRendererProvider.Context ctx, boolean slim, CallbackInfo ci) {
+    private void addBackToolFeature(EntityRendererProvider.Context context, boolean isSlim, CallbackInfo ci) {
         this.addLayer(new BackToolFeatureRenderer<>(this));
     }
 

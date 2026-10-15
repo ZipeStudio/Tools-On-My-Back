@@ -101,11 +101,10 @@ public class SystemToastMixin implements RefreshableToast {
 
     @Unique
     private void tomb$step(double displayTimeMultiplier) {
-        long now = System.currentTimeMillis();
 
+        long now = System.currentTimeMillis();
         if (this.tomb$leavingAt != 0L) {
             if (now - this.tomb$leavingAt < TOMB_LEAVE_MS) return;
-
             //? if <26.2 {
             /*this.title = this.tomb$pendingTitle;
             this.messageLines = Minecraft.getInstance().font.split(this.tomb$pendingBody, 200);

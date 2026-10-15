@@ -19,13 +19,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ChatListenerMixin {
 
     @Inject(method = "handlePlayerChatMessage", at = @At("HEAD"), cancellable = true)
-    private void tomb$sharedProfile(PlayerChatMessage message, GameProfile sender, ChatType.Bound boundChatType,
-                                    CallbackInfo ci) {
+    private void tomb$sharedProfile(PlayerChatMessage message, GameProfile sender, ChatType.Bound boundChatType, CallbackInfo ci) {
+
         String raw = message.signedContent();
         MutableComponent rewritten = ProfileShare.rewrite(raw);
         if (rewritten == null) return;
+
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player == null) return;
+
         ClientPacketListener connection = minecraft.getConnection();
         if (connection != null && message.signature() != null) {
             //? if >=1.21.5 {
@@ -34,6 +36,7 @@ public class ChatListenerMixin {
             /*connection.markMessageAsProcessed(message, true);
             *///?}
         }
+
         TOMBClient.tell(boundChatType.decorate(rewritten));
         ci.cancel();
     }
@@ -45,14 +48,17 @@ public class ChatListenerMixin {
         *///?}
         Component rewritten = ProfileShare.rewriteComponent(message);
         if (rewritten == null) return;
+
         TOMBClient.tell(rewritten);
         ci.cancel();
     }
 
     @Inject(method = "handleDisguisedChatMessage", at = @At("HEAD"), cancellable = true)
     private void tomb$sharedProfileDisguised(Component message, ChatType.Bound boundChatType, CallbackInfo ci) {
+
         Component rewritten = ProfileShare.rewriteComponent(message);
         if (rewritten == null) return;
+
         TOMBClient.tell(boundChatType.decorate(rewritten));
         ci.cancel();
     }

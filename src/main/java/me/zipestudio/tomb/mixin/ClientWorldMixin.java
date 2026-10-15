@@ -3,7 +3,6 @@ package me.zipestudio.tomb.mixin;
 import me.zipestudio.tomb.client.TOMBClient;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
@@ -20,7 +19,7 @@ public abstract class ClientWorldMixin {
 
     @Shadow
     @Nullable
-    public abstract Entity getEntity(int i);
+    public abstract Entity getEntity(int id);
 
     @Inject(at = @At("HEAD"), method = "disconnect")
     public void onDisconnect(CallbackInfo ci) {
@@ -28,8 +27,8 @@ public abstract class ClientWorldMixin {
     }
 
     @Inject(at = @At("HEAD"), method = "removeEntity")
-    public void onRemoveEntity(int i, Entity.RemovalReason reason, CallbackInfo ci) {
-        if (!(this.getEntity(i) instanceof Player player)) return;
+    public void onRemoveEntity(int id, Entity.RemovalReason reason, CallbackInfo ci) {
+        if (!(this.getEntity(id) instanceof Player player)) return;
         TOMBClient.HELD_TOOLS.remove(player.getUUID());
     }
 
@@ -40,8 +39,8 @@ public abstract class ClientWorldMixin {
     }
     //?} else {
     /*@Inject(at = @At("HEAD"), method = "addEntity")
-    public void onAddEntity(int i, Entity entity, CallbackInfo ci) {
-        tomb$noteAddedEntity(entity);
+    public void onAddEntity(int entityId, Entity entityToSpawn, CallbackInfo ci) {
+        tomb$noteAddedEntity(entityToSpawn);
     }
     *///?}
 
@@ -53,30 +52,18 @@ public abstract class ClientWorldMixin {
         }
         if (entity instanceof Projectile projectile) {
             tomb$noteProjectile(projectile);
-            return;
-        }
-
-        if (!(entity instanceof ItemEntity item)) return;
-        ItemStack leaving = item.getItem();
-        if (leaving.isEmpty()) return;
-
-        for (Player nearby : entity.level().getEntitiesOfClass(Player.class, entity.getBoundingBox().inflate(1.0D))) {
-            TOMBClient.HELD_TOOLS.computeIfPresent(nearby.getUUID(), (uuid, ctx) -> {
-                ctx.markItemDropped(leaving.copy());
-                return ctx;
-            });
         }
     }
 
     @Unique
     private static void tomb$noteProjectile(Projectile projectile) {
-        if (!(projectile.getOwner() instanceof Player owner)) return;
 
-        ItemStack flying = tomb$projectileItem(projectile);
-        if (flying.isEmpty()) return;
+        if (!(projectile.getOwner() instanceof Player owner)) return;
+        ItemStack projectileItem = tomb$projectileItem(projectile);
+        if (projectileItem.isEmpty()) return;
 
         TOMBClient.HELD_TOOLS.computeIfPresent(owner.getUUID(), (uuid, ctx) -> {
-            if (!ctx.activeMain.isEmpty() && ctx.activeMain.getItem() == flying.getItem()) {
+            if (!ctx.activeMain.isEmpty() && ctx.activeMain.getItem() == projectileItem.getItem()) {
                 ctx.markItemDropped(ctx.activeMain.copy());
             }
             return ctx;

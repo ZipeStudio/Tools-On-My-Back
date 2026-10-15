@@ -7,6 +7,7 @@ import me.zipestudio.tomb.utils.ConfigUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
@@ -22,13 +23,16 @@ import static me.zipestudio.tomb.utils.CodecUtils.option;
 @AllArgsConstructor
 public class LeafyConfig {
 
+	private static final Codec<String> SCOPE_CODEC = Codec.either(Codec.BOOL, Codec.STRING)
+			.xmap(either -> either.map(flag -> flag ? "similar" : "", text -> text), Either::right);
+
 	public static final Codec<ToolEntry> TOOL_ENTRY_CODEC = RecordCodecBuilder.create(instance -> instance.group(
 			Codec.STRING.fieldOf("itemId").forGetter(ToolEntry::getItemId),
 			Codec.STRING.fieldOf("components").orElse("").forGetter(ToolEntry::getComponents),
 			Codec.BOOL.fieldOf("matchName").orElse(false).forGetter(ToolEntry::isMatchName),
 			Codec.BOOL.fieldOf("matchModelData").orElse(false).forGetter(ToolEntry::isMatchModelData),
 			Codec.BOOL.fieldOf("matchItemModel").orElse(false).forGetter(ToolEntry::isMatchItemModel),
-			Codec.BOOL.fieldOf("applyToSimilar").orElse(false).forGetter(ToolEntry::isApplyToSimilar),
+			SCOPE_CODEC.fieldOf("applyToSimilar").orElse("").forGetter(ToolEntry::getScope),
 			Codec.BOOL.fieldOf("enabled").orElse(true).forGetter(ToolEntry::isEnabled),
 			Codec.BOOL.fieldOf("flip").orElse(false).forGetter(ToolEntry::isFlip),
 			Codec.STRING.fieldOf("displayContext").orElse("fixed").forGetter(ToolEntry::getDisplayContext),

@@ -10,7 +10,7 @@ public class HeldItemContext {
     public ItemStack previousMain = ItemStack.EMPTY;
     public int dropCooldown = 0;
 
-    public void tick(ItemStack main) {
+    public void tick(ItemStack main, ItemStack offhand) {
 
         if (dropCooldown > 0) {
             dropCooldown--;
@@ -40,19 +40,16 @@ public class HeldItemContext {
             previousMain = activeMain;
         }
 
+        if (ConfigHandler.areStacksEqual(previousMain, offhand)) {
+            previousMain = ItemStack.EMPTY;
+        }
+
         activeMain = main;
     }
 
     public void markItemDropped(ItemStack dropped) {
         this.droppedStack = dropped;
         this.dropCooldown = 2;
-    }
-
-    public void clear() {
-        this.droppedStack = ItemStack.EMPTY;
-        this.activeMain = ItemStack.EMPTY;
-        this.previousMain = ItemStack.EMPTY;
-        this.dropCooldown = 0;
     }
 
 }

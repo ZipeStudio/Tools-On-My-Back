@@ -67,19 +67,19 @@ public final class FloatSlider extends AbstractSliderButton {
 
     //? if <1.20.2 {
     /*@Override
-    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        graphics.setColor(1f, 1f, 1f, this.alpha);
+    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        guiGraphics.setColor(1f, 1f, 1f, this.alpha);
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.enableDepthTest();
-        graphics.blitNineSliced(TEXTURE, getX(), getY(), getWidth(), getHeight(),
+        guiGraphics.blitNineSliced(TEXTURE, getX(), getY(), getWidth(), getHeight(),
                 BORDER_X, BORDER_Y, TEXTURE_W, TEXTURE_H, 0, getTextureY());
-        graphics.blitNineSliced(TEXTURE, getX() + (int) (this.value * (getWidth() - HANDLE_WIDTH)),
+        guiGraphics.blitNineSliced(TEXTURE, getX() + (int) (this.value * (getWidth() - HANDLE_WIDTH)),
                 getY(), HANDLE_WIDTH, getHeight(),
                 BORDER_X, BORDER_Y, TEXTURE_W, TEXTURE_H, 0, getHandleTextureY());
-        graphics.setColor(1f, 1f, 1f, 1f);
+        guiGraphics.setColor(1f, 1f, 1f, 1f);
         int colour = this.active ? 0xFFFFFF : 0xA0A0A0;
-        renderScrollingString(graphics, Minecraft.getInstance().font, TEXT_MARGIN,
+        renderScrollingString(guiGraphics, Minecraft.getInstance().font, TEXT_MARGIN,
                 colour | Mth.ceil(this.alpha * 255f) << 24);
     }
     *///?}

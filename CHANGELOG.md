@@ -1,12 +1,7 @@
-v1.1.1:
+v1.1.2:
 ### Changes
-- Ported to 26.3
-- Backported to forge 1.20.1
-- Esc asks before leaving unsaved changes
-- Right-click resets a setting to the saved value, then to the default
-- New setting: show your own items in first person
+- "Apply to Similar" is now a dropdown list that can also target an item tag or every item of the same mod
+- Added compatibility with EMF/ETF resource packs
 ### Fixes
-- Items no longer cover the screen during Better Combat animations
-- Fixed the rotation direction of the dummy preview
-- Now only one notification (toast) at a time
-- Fixed the editor layout in narrow windows and at high GUI scale
+- Fixed an issue with the shield in the offhand
+- Fixed dropped items staying on other players' backs in multiplayer

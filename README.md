@@ -110,4 +110,4 @@ Yeah, you got it right. Just by advertising, you will support the mod and the cr
 
 The license terms for this project are defined in the [LICENSE](https://github.com/ZipeStudio/tools-on-my-back/blob/master/LICENSE.md) file in this repository. That file always takes precedence over any license shown anywhere else.
 
-### [See the original mod repository](https://github.com/ZipeStudio/tools-on-my-back)
+[**See the original mod repository**](https://github.com/ZipeStudio/tools-on-my-back)

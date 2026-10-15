@@ -13,12 +13,15 @@
 		//?}
 		"ClientWorldMixin",
 		"ItemDropMixin",
+		"ItemEntitySyncMixin",
 		"PlayerTickMixin",
 		"InventoryMixin",
 		"ClientPacketListenerMixin",
 		"ChatListenerMixin",
 		"ScreenClickMixin",
 		"SystemToastMixin",
+		"EmfVariableRegistryMixin",
+		"EmfMathMixin",
 	],
 	"injectors": {
 		"defaultRequire": 1

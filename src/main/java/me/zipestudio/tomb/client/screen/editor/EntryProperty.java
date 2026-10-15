@@ -81,9 +81,6 @@ public final class EntryProperty {
             new FlagProperty("editor.enabled", true, ToolEntry::isEnabled, ToolEntry::setEnabled);
     public static final FlagProperty FLIP =
             new FlagProperty("editor.flip", true, ToolEntry::isFlip, ToolEntry::setFlip);
-    public static final FlagProperty APPLY_TO_SIMILAR =
-            new FlagProperty("editor.apply_to_similar", true, ToolEntry::isApplyToSimilar, ToolEntry::setApplyToSimilar);
-
     public static final FlagProperty MATCH_NAME =
             new FlagProperty("editor.match_name", false, ToolEntry::isMatchName, ToolEntry::setMatchName);
     public static final FlagProperty MATCH_MODEL_DATA =
@@ -95,7 +92,7 @@ public final class EntryProperty {
             List.of(SCALE, ANGLE_X, ANGLE_Y, ANGLE_Z, OFFSET_X, OFFSET_Y, OFFSET_Z);
 
     private static final List<FlagProperty> TARGET_FLAGS =
-            List.of(MATCH_NAME, MATCH_MODEL_DATA, MATCH_ITEM_MODEL, APPLY_TO_SIMILAR, ENABLED);
+            List.of(MATCH_NAME, MATCH_MODEL_DATA, MATCH_ITEM_MODEL, ENABLED);
 
     private static FloatProperty angle(String key, FloatGetter getter, FloatSetter setter) {
         return new FloatProperty(key, -180f, 180f, true, getter, setter);
@@ -113,6 +110,7 @@ public final class EntryProperty {
 
     public static void copyAll(ToolEntry from, ToolEntry to) {
         for (FlagProperty flag : TARGET_FLAGS) flag.copy(from, to);
+        to.setScope(from.getScope());
         copyLook(from, to);
     }
 }

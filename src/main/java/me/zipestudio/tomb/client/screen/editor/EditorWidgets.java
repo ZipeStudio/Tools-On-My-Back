@@ -74,7 +74,7 @@ public final class EditorWidgets {
             int left = box.getX() + 4;
             int right = left + box.getInnerWidth();
             int top = box.getY() + (box.getHeight() - 8) / 2;
-            painter.scrollingText(hint.text(), font, left, box.getY(), right,
+            painter.scrollingText(hint.text(), left, box.getY(), right,
                     box.getY() + box.getHeight(), top, COLOUR_HINT);
         }
     }

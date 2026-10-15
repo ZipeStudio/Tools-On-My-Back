@@ -5,10 +5,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.component.DataComponents;
 //?}
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.*;
 
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -64,6 +68,81 @@ public class ConfigHandler {
         return isTool(stack);
     }
 
+    public static final String SCOPE_SIMILAR = "similar";
+
+    public static List<String> scopeOptions(ToolEntry entry) {
+        List<String> options = new ArrayList<>();
+        options.add("");
+        options.add(SCOPE_SIMILAR);
+
+        ItemStack stack = buildStack(entry);
+        if (!stack.isEmpty()) {
+            Identifier id = getIdentifierFromItem(stack.getItem());
+            if (id != null) options.add(id.getNamespace() + ":*");
+
+            BuiltInRegistries.ITEM.wrapAsHolder(stack.getItem()).tags()
+                    .map(tag -> "#" + tagId(tag))
+                    .filter(tag -> tag.length() > 1 && !tag.contains(":enchantable/"))
+                    .sorted()
+                    .forEach(options::add);
+        }
+
+        String current = entry.getScope();
+        if (!current.isEmpty() && !options.contains(current)) options.add(current);
+        return options;
+    }
+
+    private static Method tagIdAccessor;
+
+    private static String tagId(TagKey<Item> tag) {
+        try {
+            if (tagIdAccessor == null) {
+                for (Method candidate : TagKey.class.getMethods()) {
+                    if (candidate.getParameterCount() == 0 && candidate.getReturnType() == Identifier.class) {
+                        tagIdAccessor = candidate;
+                        break;
+                    }
+                }
+            }
+            return tagIdAccessor == null ? "" : String.valueOf(tagIdAccessor.invoke(tag));
+        } catch (Throwable unreadable) {
+            return "";
+        }
+    }
+
+    public static boolean inScope(ItemStack stack, Identifier anchorId, String scope) {
+        if (scope.startsWith("#")) {
+            Identifier tagId = Identifier.tryParse(scope.substring(1));
+            return tagId != null && stack.is(TagKey.create(Registries.ITEM, tagId));
+        }
+        if (scope.endsWith(":*")) {
+            Identifier stackId = getIdentifierFromItem(stack.getItem());
+            return stackId != null && stackId.getNamespace().equals(scope.substring(0, scope.length() - 2));
+        }
+        if (scope.equals(SCOPE_SIMILAR)) {
+            Item anchor = itemOf(anchorId);
+            if (anchor == null) return false;
+            String category = detectCategory(anchor.getDefaultInstance());
+            if (!category.isEmpty()) return matchesType(stack, category);
+            return sharesModdedClass(anchor, stack.getItem());
+        }
+        return anchorId.equals(getIdentifierFromItem(stack.getItem()));
+    }
+
+    private static boolean sharesModdedClass(Item anchor, Item other) {
+        Class<?> type = anchor.getClass();
+        if (type.getName().startsWith("net.minecraft.")) return false;
+        return type.equals(other.getClass());
+    }
+
+    private static Item itemOf(Identifier id) {
+        //? if >=1.21.2 {
+        return BuiltInRegistries.ITEM.getValue(id);
+        //?} else {
+        /*return BuiltInRegistries.ITEM.get(id);
+        *///?}
+    }
+
     private static boolean isSkillet(Item item) {
         return isItemEqualsId(item, SKILLET_ID);
     }
@@ -88,10 +167,10 @@ public class ConfigHandler {
         }
 
         List<ToolEntry> tools = leafyConfig.getTools();
-        for (ToolEntry e : tools) if (!e.isApplyToSimilar() && discriminates(e) && e.matches(stack)) return Optional.of(e);
-        for (ToolEntry e : tools) if (!e.isApplyToSimilar() && !discriminates(e) && e.matches(stack)) return Optional.of(e);
-        for (ToolEntry e : tools) if (e.isApplyToSimilar() && discriminates(e) && e.matches(stack)) return Optional.of(e);
-        for (ToolEntry e : tools) if (e.isApplyToSimilar() && !discriminates(e) && e.matches(stack)) return Optional.of(e);
+        for (ToolEntry e : tools) if (e.getScope().isEmpty() && discriminates(e) && e.matches(stack)) return Optional.of(e);
+        for (ToolEntry e : tools) if (e.getScope().isEmpty() && !discriminates(e) && e.matches(stack)) return Optional.of(e);
+        for (ToolEntry e : tools) if (!e.getScope().isEmpty() && discriminates(e) && e.matches(stack)) return Optional.of(e);
+        for (ToolEntry e : tools) if (!e.getScope().isEmpty() && !discriminates(e) && e.matches(stack)) return Optional.of(e);
         return Optional.empty();
     }
 

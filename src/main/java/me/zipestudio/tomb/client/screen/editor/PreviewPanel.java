@@ -239,6 +239,9 @@ public final class PreviewPanel {
         float fitted = Mth.clamp(Math.min(boxHeight * 3f / 7f, boxWidth * 4f / 5f), 45f, 100f);
         float scale = fitted * zoom;
 
+        entity.tickCount++;
+        entity.setOnGround(true);
+
         boolean crouching = pose == CameraPose.SNEAKING;
         entity.setPose(crouching ? Pose.CROUCHING : Pose.STANDING);
         entity.setShiftKeyDown(crouching);

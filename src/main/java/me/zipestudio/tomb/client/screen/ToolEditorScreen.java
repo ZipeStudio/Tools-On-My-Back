@@ -4,7 +4,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import me.zipestudio.tomb.TOMBServer;
 import me.zipestudio.tomb.client.TOMBClient;
 import me.zipestudio.tomb.client.screen.editor.ActionRow;
-import me.zipestudio.tomb.client.screen.editor.DisplayDropdown;
+import me.zipestudio.tomb.client.screen.editor.ListDropdown;
 import me.zipestudio.tomb.client.screen.editor.EditorLayout;
 import me.zipestudio.tomb.client.screen.editor.EditorLayout.Column;
 import me.zipestudio.tomb.client.screen.editor.EditorLayout.Slot;
@@ -31,19 +31,24 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
+import java.util.List;
 import java.util.Objects;
 
 public class ToolEditorScreen extends Screen implements EditorWidgets.Host, ProfileSharePanel.Host {
 
     private static final int FLIP_WIDTH = 90;
     private static final int COLOUR_TITLE = 0xFFFFFFFF;
+    private static final List<String> DISPLAY_VALUES = java.util.Arrays.stream(ItemDisplayContext.values())
+            .map(ItemDisplayContext::getSerializedName)
+            .toList();
     private static final long EXIT_CONFIRM_MS = 3000L;
 
     private final Screen parent;
     private final EditorSession session;
     private final EditorLayout layout = new EditorLayout();
     private final EditorWidgets widgets = new EditorWidgets(this);
-    private final DisplayDropdown dropdown = new DisplayDropdown();
+    private final ListDropdown dropdown = new ListDropdown();
+    private final ListDropdown scopeDropdown = new ListDropdown();
     private final EntryGridPanel grid;
     private final ActionRow actionRow;
     private EditorPainter painter;
@@ -51,6 +56,7 @@ public class ToolEditorScreen extends Screen implements EditorWidgets.Host, Prof
     private ProfileSharePanel profiles;
 
     private Button displayButton;
+    private Button scopeButton;
     private boolean merged;
     private long exitArmedUntil;
 
@@ -81,6 +87,7 @@ public class ToolEditorScreen extends Screen implements EditorWidgets.Host, Prof
         widgets.clear();
         profiles.clear();
         dropdown.close();
+        scopeDropdown.close();
         displayButton = null;
 
         layout.measure(this.width, this.height, painter);
@@ -150,7 +157,7 @@ public class ToolEditorScreen extends Screen implements EditorWidgets.Host, Prof
             updatePreview();
         });
         addRenderableWidget(idBox);
-        widgets.flag(column.full(), EntryProperty.APPLY_TO_SIMILAR);
+        buildScopeButton(column.full(), entry);
 
         column.heading(TOMBServer.text("editor.section.match"));
         Slot[] match = column.thirds(3);
@@ -162,9 +169,11 @@ public class ToolEditorScreen extends Screen implements EditorWidgets.Host, Prof
 
         column.heading(TOMBServer.text("editor.section.rendering"));
         Slot displaySlot = column.full();
-        this.displayButton = Button.builder(DisplayDropdown.buttonLabel(entry), ignored -> dropdown.toggle())
+        this.displayButton = Button.builder(displayLabel(entry), ignored -> dropdown.toggle())
                 .bounds(displaySlot.x(), displaySlot.y(), displaySlot.width(), displaySlot.height()).build();
-        dropdown.layout(displaySlot, this.height);
+        dropdown.layout(this.displayButton, this.height, DISPLAY_VALUES,
+                ConfigHandler.parseDisplayContext(entry.getDisplayContext()).getSerializedName(),
+                Component::literal, this::pickDisplay);
         widgets.register(this.displayButton, TOMBServer.text("editor.display.tooltip"),
                 (from, to) -> to.setDisplayContext(from.getDisplayContext()),
                 (from, to) -> Objects.equals(from.getDisplayContext(), to.getDisplayContext()), true);
@@ -184,6 +193,49 @@ public class ToolEditorScreen extends Screen implements EditorWidgets.Host, Prof
         widgets.slider(position[0], EntryProperty.OFFSET_X);
         widgets.slider(position[1], EntryProperty.OFFSET_Y);
         widgets.slider(position[2], EntryProperty.OFFSET_Z);
+    }
+
+    private void buildScopeButton(Slot slot, ToolEntry entry) {
+        List<String> options = ConfigHandler.scopeOptions(entry);
+        String current = options.contains(entry.getScope()) ? entry.getScope() : "";
+        this.scopeButton = Button.builder(scopeButtonLabel(current), ignored -> scopeDropdown.toggle())
+                .bounds(slot.x(), slot.y(), slot.width(), slot.height()).build();
+        scopeDropdown.layout(this.scopeButton, this.height, options, current, ToolEditorScreen::scopeLabel,
+                this::pickScope);
+        widgets.register(this.scopeButton, TOMBServer.text("editor.apply_to_similar.tooltip"),
+                (from, to) -> to.setScope(from.getScope()),
+                (from, to) -> Objects.equals(from.getScope(), to.getScope()), true);
+    }
+
+    private void pickDisplay(String value) {
+        ToolEntry current = session.selected();
+        if (current == null) return;
+        current.setDisplayContext(value);
+        displayButton.setMessage(displayLabel(current));
+        updatePreview();
+    }
+
+    private void pickScope(String value) {
+        ToolEntry current = session.selected();
+        if (current == null) return;
+        current.setScope(value);
+        rebuildWidgets();
+    }
+
+    private static Component displayLabel(ToolEntry entry) {
+        return TOMBServer.text("editor.display").append(Component.literal(": "
+                + ConfigHandler.parseDisplayContext(entry.getDisplayContext()).getSerializedName()));
+    }
+
+    private static Component scopeButtonLabel(String scope) {
+        return TOMBServer.text("editor.apply_to_similar").append(Component.literal(": "))
+                .append(scopeLabel(scope));
+    }
+
+    private static Component scopeLabel(String scope) {
+        if (scope.isEmpty()) return TOMBServer.text("editor.scope.item");
+        if (scope.equals(ConfigHandler.SCOPE_SIMILAR)) return TOMBServer.text("editor.scope.similar");
+        return Component.literal(scope);
     }
 
     private void buildBottomRow() {
@@ -314,22 +366,8 @@ public class ToolEditorScreen extends Screen implements EditorWidgets.Host, Prof
     private boolean handleClick(double mouseX, double mouseY, int button) {
         setFocused(null);
         profiles.dismissIfClickedAway(mouseX, mouseY);
-        if (dropdown.open()) {
-            boolean onButton = displayButton != null && displayButton.isMouseOver(mouseX, mouseY);
-            if (button == InputConstants.MOUSE_BUTTON_LEFT && dropdown.over(mouseX, mouseY)) {
-                ItemDisplayContext picked = dropdown.valueAt(mouseY);
-                dropdown.close();
-                ToolEntry current = session.selected();
-                if (picked != null && current != null) {
-                    current.setDisplayContext(picked.getSerializedName());
-                    displayButton.setMessage(DisplayDropdown.buttonLabel(current));
-                    updatePreview();
-                }
-                return true;
-            }
-            dropdown.close();
-            if (onButton) return true;
-        }
+        if (dropdown.mouseClicked(mouseX, mouseY, button)) return true;
+        if (scopeDropdown.mouseClicked(mouseX, mouseY, button)) return true;
         switch (grid.mousePressed(mouseX, mouseY, button)) {
             case HANDLED -> {
                 return true;
@@ -354,7 +392,7 @@ public class ToolEditorScreen extends Screen implements EditorWidgets.Host, Prof
     }
 
     private boolean handleScroll(double mouseX, double mouseY, double scrollY) {
-        if (dropdown.over(mouseX, mouseY)) return true;
+        if (dropdown.over(mouseX, mouseY) || scopeDropdown.over(mouseX, mouseY)) return true;
         if (grid.mouseScrolled(mouseX, mouseY, scrollY)) return true;
         if (preview.mouseScrolled(mouseX, mouseY, scrollY)) return true;
         return widgets.nudgeSlider(mouseX, mouseY, scrollY);
@@ -373,9 +411,9 @@ public class ToolEditorScreen extends Screen implements EditorWidgets.Host, Prof
     }
 
     @Override
-    public boolean mouseDragged(net.minecraft.client.input.MouseButtonEvent event, double dragX, double dragY) {
-        if (handleDrag(event.x(), event.y(), event.button(), dragX, dragY)) return true;
-        return super.mouseDragged(event, dragX, dragY);
+    public boolean mouseDragged(net.minecraft.client.input.MouseButtonEvent event, double dx, double dy) {
+        if (handleDrag(event.x(), event.y(), event.button(), dx, dy)) return true;
+        return super.mouseDragged(event, dx, dy);
     }
     //?} else {
     /*@Override
@@ -393,20 +431,20 @@ public class ToolEditorScreen extends Screen implements EditorWidgets.Host, Prof
 
     //? if >=1.21 {
     @Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
-        if (handleScroll(mouseX, mouseY, scrollY)) return true;
-        return super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
+    public boolean mouseScrolled(double x, double y, double scrollX, double scrollY) {
+        if (handleScroll(x, y, scrollY)) return true;
+        return super.mouseScrolled(x, y, scrollX, scrollY);
     }
     //?} else {
     /*@Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double scrollY) {
-        if (handleScroll(mouseX, mouseY, scrollY)) return true;
-        return super.mouseScrolled(mouseX, mouseY, scrollY);
+    public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
+        if (handleScroll(mouseX, mouseY, delta)) return true;
+        return super.mouseScrolled(mouseX, mouseY, delta);
     }
     *///?}
 
     private boolean hoverBlocked(int mouseX, int mouseY) {
-        return dropdown.over(mouseX, mouseY);
+        return dropdown.over(mouseX, mouseY) || scopeDropdown.over(mouseX, mouseY);
     }
 
     private void drawForeground(int mouseX, int mouseY, int hoverX, int hoverY, float partialTick) {
@@ -419,7 +457,8 @@ public class ToolEditorScreen extends Screen implements EditorWidgets.Host, Prof
         preview.render(painter, partialTick);
         painter.drawFrames();
         if (preview.unavailable()) preview.drawNotice(painter);
-        dropdown.render(painter, session.selected(), mouseX, mouseY);
+        dropdown.render(painter, mouseX, mouseY);
+        scopeDropdown.render(painter, mouseX, mouseY);
 
         if (preview.hintDue(hoverX, hoverY)) {
             painter.tooltip(TOMBServer.text("editor.hint.drag"), mouseX, mouseY);
@@ -430,45 +469,45 @@ public class ToolEditorScreen extends Screen implements EditorWidgets.Host, Prof
 
     //? if >=26.1 {
     @Override
-    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
         boolean blocked = hoverBlocked(mouseX, mouseY);
         int hoverX = blocked ? -1 : mouseX;
         int hoverY = blocked ? -1 : mouseY;
 
         painter.target(graphics);
         painter.drawBackdrops();
-        super.extractRenderState(graphics, hoverX, hoverY, partialTick);
+        super.extractRenderState(graphics, hoverX, hoverY, a);
         painter.target(graphics);
-        drawForeground(mouseX, mouseY, hoverX, hoverY, partialTick);
+        drawForeground(mouseX, mouseY, hoverX, hoverY, a);
     }
     //?} else {
     /*@Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         boolean blocked = hoverBlocked(mouseX, mouseY);
         int hoverX = blocked ? -1 : mouseX;
         int hoverY = blocked ? -1 : mouseY;
 
-        painter.target(graphics);
+        painter.target(guiGraphics);
         //? if <1.21 {
-        /^renderBackground(graphics);
+        /^renderBackground(guiGraphics);
         ^///?}
-        super.render(graphics, hoverX, hoverY, partialTick);
-        painter.target(graphics);
+        super.render(guiGraphics, hoverX, hoverY, partialTick);
+        painter.target(guiGraphics);
         drawForeground(mouseX, mouseY, hoverX, hoverY, partialTick);
     }
 
     //? if >=1.21 {
     @Override
-    public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        super.renderBackground(graphics, mouseX, mouseY, partialTick);
-        painter.target(graphics);
+    public void renderBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        super.renderBackground(guiGraphics, mouseX, mouseY, partialTick);
+        painter.target(guiGraphics);
         painter.drawBackdrops();
     }
     //?} else {
     /^@Override
-    public void renderBackground(GuiGraphics graphics) {
-        super.renderBackground(graphics);
-        painter.target(graphics);
+    public void renderBackground(GuiGraphics guiGraphics) {
+        super.renderBackground(guiGraphics);
+        painter.target(guiGraphics);
         painter.drawBackdrops();
     }
     ^///?}

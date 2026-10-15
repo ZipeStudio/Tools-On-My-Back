@@ -28,7 +28,6 @@ public abstract class InventoryMixin {
     public void onSelected(boolean all, CallbackInfoReturnable<ItemStack> cir) {
 
         boolean isClient = player.level().isClientSide();
-
         if (!isClient) return;
 
         //? if >=1.21.5 {
@@ -36,7 +35,6 @@ public abstract class InventoryMixin {
         //?} else {
         /*ItemStack selectedItem = this.getSelected();
         *///?}
-
         if (selectedItem.isEmpty()) return;
 
         TOMBClient.HELD_TOOLS.computeIfPresent(player.getUUID(), (k, ctx) -> {

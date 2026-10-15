@@ -210,7 +210,7 @@ public final class EditorSession {
         for (ToolEntry entry : source) {
             copy.add(new ToolEntry(entry.getItemId(), entry.getComponents(),
                     entry.isMatchName(), entry.isMatchModelData(), entry.isMatchItemModel(),
-                    entry.isApplyToSimilar(), entry.isEnabled(), entry.isFlip(),
+                    entry.getScope(), entry.isEnabled(), entry.isFlip(),
                     entry.getDisplayContext(), entry.getScale(),
                     entry.getAngleX(), entry.getAngleY(), entry.getAngleZ(),
                     entry.getOffsetX(), entry.getOffsetY(), entry.getOffsetZ()));

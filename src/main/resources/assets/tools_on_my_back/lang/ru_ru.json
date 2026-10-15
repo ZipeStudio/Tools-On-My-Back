@@ -55,8 +55,10 @@
 	"${mod_id}.editor.item_id.hint": "minecraft:diamond_sword",
 	"${mod_id}.editor.item_id.tooltip": "Идентификатор предмета для этой записи.",
 
-	"${mod_id}.editor.apply_to_similar": "Для всех похожих",
-	"${mod_id}.editor.apply_to_similar.tooltip": "ВКЛ: применять ко всем предметам того же типа — все мечи, все топоры, включая модовые.",
+	"${mod_id}.editor.apply_to_similar": "Применять к",
+	"${mod_id}.editor.apply_to_similar.tooltip": "Кому достанутся эти настройки: только этому предмету, всем того же типа, одному из его тегов или всему моду.",
+	"${mod_id}.editor.scope.item": "Этому предмету",
+	"${mod_id}.editor.scope.similar": "Похожим",
 	"${mod_id}.editor.match_name": "Имя",
 	"${mod_id}.editor.match_name.tooltip": "Подходят только предметы, переименованные так же, как этот.\nНичего не отмечено — любой вариант предмета.",
 	"${mod_id}.editor.match_model_data": "CMD",
